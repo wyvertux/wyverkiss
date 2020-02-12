@@ -1,0 +1,29 @@
+Wyverkiss is an alternative rootfs for KISS Linux. If KISS goes GNU, we
+go the opposite.
+
+Wyverkiss (unlike Wyvertux) is supposed to closely track KISS Linux as
+much as possible. It means the Wyverkiss repo will only be used as an
+"overlay" for KISS Linux to work outside the GNU toolchain ecosystem
+(except for a select few programs that will be needed). The changes made
+in Wyverkiss will be upstreamed if possible.
+
+Ideally, this repository should be almost empty or unneeded at all. But
+that would be highly unrealistic.
+
+Changes:
+- The GCC suite (gcc, libstdc++, libgcc, etc.) will be replaced by the
+  LLVM suite (clang, libc++, compiler-rt, etc.)
+- binutils will be replaced with its LLVM counterpart (except GNU as,
+  which will be packaged separately)
+- bison will be replaced with byacc (patching might be needed for a few
+  packages)
+- gzip will be replaced with pigz
+- GNU make will be replaced with bmake, but the former will be available
+  as it's absolutely needed by some packages. It will use the gmake name.
+- ncurses will be replaced by netbsd-curses, thanks to Sabotage Linux.
+
+No usable rootfs yet. But I intend to make one.
+
+NOTE: Wyverkiss might or will NOT be officially supported by KISS Linux.
+      As always, use at your own risk. Support for certain packages
+      might not be guaranteed.
