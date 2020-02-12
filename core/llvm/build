@@ -1,0 +1,64 @@
+#!/bin/sh -e
+
+(
+    cd libcxx
+    patch -p1 < ../libcxx-musl_compat.patch
+)
+
+sed -i 's/!defined(_GCC_MAX_ALIGN_T)/& \&\& !defined(__DEFINED_max_align_t)/' libcxx/include/stddef.h
+sed -i 's/set(COMPILER_RT_HAS_SANITIZER_COMMON TRUE)/set(COMPILER_RT_HAS_SANITIZER_COMMON FALSE)/' compiler-rt/cmake/config-ix.cmake
+
+export DESTDIR="$1"
+cmake -B build \
+    -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++ \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DLLVM_BUILD_LLVM_DYLIB=ON \
+    -DLLVM_LINK_LLVM_DYLIB=ON \
+    -DLLVM_ENABLE_PROJECTS="clang;compiler-rt;libunwind;libcxxabi;libcxx;lld" \
+    -DLLVM_ENABLE_RTTI=ON \
+    -DLLVM_ENABLE_EH=ON \
+    -DLLVM_ENABLE_TERMINFO=OFF \
+    -DLLVM_ENABLE_LIBXML2=OFF \
+    -DLLVM_ENABLE_LIBEDIT=OFF \
+    -DLLVM_HOST_TRIPLE="$(clang -dumpmachine)" \
+    -DLLVM_BUILD_EXAMPLES=OFF \
+    -DLLVM_BUILD_DOCS=OFF \
+    -DLLVM_BUILD_TESTS=OFF \
+    -DLLVM_ENABLE_LIBCXX=ON \
+    -DLLVM_ENABLE_LLD=ON \
+    -DLLVM_INSTALL_BINUTILS_SYMLINKS=ON \
+    -DLIBUNWIND_USE_COMPILER_RT=ON \
+    -DLIBCXXABI_USE_LLVM_UNWINDER=ON \
+    -DLIBCXXABI_USE_COMPILER_RT=ON \
+    -DLIBCXX_CXX_ABI=libcxxabi \
+    -DLIBCXX_USE_COMPILER_RT=ON \
+    -DLIBCXX_HAS_MUSL_LIBC=ON \
+    -DCOMPILER_RT_USE_BUILTINS_LIBRARY=ON \
+    -DCOMPILER_RT_EXCLUDE_ATOMIC_BUILTIN=OFF \
+    -DCLANG_DEFAULT_CXX_STDLIB=libc++ \
+    -DCLANG_DEFAULT_RTLIB=compiler-rt \
+    -Wno-dev llvm
+
+cmake --build build
+cmake --install build
+
+# libc++abi header files
+mkdir -p "$1/usr"
+cp -r libcxxabi/include "$1/usr"
+
+# LLD: Replace GNU binutils
+ln -s ld.lld "$1/usr/bin/ld"
+
+# Clang: Some legacy programs may require cc
+ln -s clang "$1/usr/bin/cc"
+
+# Clang: equivalent for c++
+ln -s clang++ "$1/usr/bin/c++"
+
+# Clang: equivalent for cpp
+ln -s clang-cpp "$1/usr/bin/cpp"
+
+# Clang: POSIX compliance
+install -m755 c99 "$1/usr/bin/c99"

@@ -1,0 +1,9 @@
+https://github.com/llvm/llvm-project/releases/download/llvmorg-9.0.1/llvm-9.0.1.src.tar.xz llvm/
+https://github.com/llvm/llvm-project/releases/download/llvmorg-9.0.1/clang-9.0.1.src.tar.xz clang/
+https://github.com/llvm/llvm-project/releases/download/llvmorg-9.0.1/compiler-rt-9.0.1.src.tar.xz compiler-rt/
+https://github.com/llvm/llvm-project/releases/download/llvmorg-9.0.1/libunwind-9.0.1.src.tar.xz libunwind/
+https://github.com/llvm/llvm-project/releases/download/llvmorg-9.0.1/libcxx-9.0.1.src.tar.xz libcxx/
+https://github.com/llvm/llvm-project/releases/download/llvmorg-9.0.1/libcxxabi-9.0.1.src.tar.xz libcxxabi/
+https://github.com/llvm/llvm-project/releases/download/llvmorg-9.0.1/lld-9.0.1.src.tar.xz lld/
+patches/libcxx-musl_compat.patch
+files/c99
