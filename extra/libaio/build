@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+gmake
+gmake prefix="$1/usr" install
