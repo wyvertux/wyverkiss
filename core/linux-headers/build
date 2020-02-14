@@ -3,4 +3,5 @@
 gmake \
     headers_install \
     INSTALL_HDR_PATH="$1/usr" \
-    HOSTCC="${CC:-cc}"
+    HOSTCC="${CC:-cc}" \
+    CC="${CC:-cc}"
