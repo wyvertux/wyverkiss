@@ -1,0 +1,17 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --program-prefix=g \
+    --build=x86_64-pc-linux-musl \
+    --host=x86_64-pc-linux-musl \
+    --enable-targets=x86_64-pep \
+    --disable-multilib \
+    --disable-werror \
+    --with-mmap \
+    --with-system-zlib
+
+make all-gas
+make DESTDIR="$1" install-gas
+
+ln -s gas "$1/usr/bin/as"
