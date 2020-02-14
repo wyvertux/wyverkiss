@@ -1,0 +1,8 @@
+#!/bin/sh -e
+
+./boot-strap --with-default-sys-path=/usr/share/mk op=build
+./boot-strap --prefix=/usr --with-mksrc=/usr/share/mk --install-destdir="$1" op=install
+
+rm -rf "$1/usr/share/man/cat1"
+install -Dm644 bmake.1 "$1/usr/share/man/man1/bmake.1"
+ln -s bmake "$1/usr/bin/make"

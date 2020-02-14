@@ -1,0 +1,6 @@
+#!/bin/sh
+
+cat <<EOF
+NOTE: This package is bmake, not GNU make. GNU make is packaged as
+      gmake in wyverkiss/gnu.
+EOF
