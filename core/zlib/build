@@ -1,0 +1,12 @@
+#!/bin/sh -e
+
+# Otherwise, the build will fail with ld.lld
+export CFLAGS="$CFLAGS -fPIC"
+
+./configure \
+    --prefix=/usr \
+    --libdir=/usr/lib \
+    --shared
+
+make
+make DESTDIR="$1" install
