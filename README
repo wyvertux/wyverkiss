@@ -22,8 +22,6 @@ Changes:
   as it's absolutely needed by some packages. It will use the gmake name.
 - ncurses will be replaced by netbsd-curses, thanks to Sabotage Linux.
 
-No usable rootfs yet. But I intend to make one.
-
 NOTE: Wyverkiss might or will NOT be officially supported by KISS Linux.
       As always, use at your own risk. Support for certain packages
       might not be guaranteed.
