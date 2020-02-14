@@ -1,0 +1,15 @@
+#!/bin/sh
+
+gmake
+gmake DESTDIR="$1" PREFIX=/usr install
+
+for libs in curses terminfo panel menu form; do
+    chmod 755 "$1/usr/lib/lib${libs}.so"
+done
+
+# ncurses-compatible script
+install -Dm755 ncurses5-config "$1/usr/bin/ncurses5-config"
+
+# These conflicts with busybox
+rm "$1/usr/bin/clear"
+rm "$1/usr/bin/reset"
