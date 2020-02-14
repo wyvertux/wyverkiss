@@ -1,8 +1,22 @@
 #!/bin/sh -e
 
+cd bmake
+
+sed -i -e '1 s;:;#!/bin/sh;' install-sh
+
 ./boot-strap --with-default-sys-path=/usr/share/mk op=build
 ./boot-strap --prefix=/usr --with-mksrc=/usr/share/mk --install-destdir="$1" op=install
 
 rm -rf "$1/usr/share/man/cat1"
-install -Dm644 bmake.1 "$1/usr/share/man/man1/bmake.1"
-ln -s bmake "$1/usr/bin/make"
+install -Dm644 bmake.1 "$1/usr/share/man/man1/make.1"
+
+# So this is an ugly hack since my chroot's bmake build system can't,
+# for whatever reason, put bmake on the main srcdir (but my system on
+# Wyvertux can, so will check later). And it will requires Linux 5
+# since the build system recognized it as such, so if Linux 6
+# releases, we're fucked.
+if [ -x ./bmake ]; then
+    install -Dm755 bmake "$1/usr/bin/make"
+else
+    install -Dm755 ../linux5-x86_64/bmake "$1/usr/bin/make"
+fi
