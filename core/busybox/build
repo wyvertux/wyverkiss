@@ -12,8 +12,8 @@ sed -i 's:gcc:cc:' Makefile
 
 # Build and install regular busybox.
 # This excludes utilities which require 'suid' to function.
-# Force -O0, see above.
-gmake CFLAGS="$CFLAGS -O0"
+# Override CFLAGS to build it with -O0, see above.
+gmake CFLAGS="-O0"
 gmake CONFIG_PREFIX="$1/usr" install
 
 # Rename the binary temporarily.
@@ -22,7 +22,7 @@ mv "$1/usr/bin/busybox" "$1/usr/bin/busybox-nosuid"
 # Build and install suid busybox.
 # This _only_ includes utlities which require 'suid' to function.
 cp -f .config-suid .config
-gmake CFLAGS="$CFLAGS -O0"
+gmake CFLAGS="-O0"
 gmake CONFIG_PREFIX="$1/usr" install
 
 # Aptly name the busybox binaries.
