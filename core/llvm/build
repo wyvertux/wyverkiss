@@ -16,6 +16,7 @@ cmake -B build \
     -DCMAKE_BUILD_TYPE=Release \
     -DLLVM_BUILD_LLVM_DYLIB=ON \
     -DLLVM_LINK_LLVM_DYLIB=ON \
+    -DLLVM_TARGETS_TO_BUILD="host;AMDGPU" \
     -DLLVM_ENABLE_PROJECTS="clang;compiler-rt;libunwind;libcxxabi;libcxx;lld" \
     -DLLVM_ENABLE_RTTI=ON \
     -DLLVM_ENABLE_EH=ON \
