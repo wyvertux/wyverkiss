@@ -1,1 +1,11 @@
-/var/db/kiss/repo/extra/alsa-utils/build
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --disable-alsaconf \
+    --disable-bat \
+    --disable-xmlto
+
+gmake
+gmake DESTDIR="$1" install
