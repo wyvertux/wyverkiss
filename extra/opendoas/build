@@ -1,0 +1,14 @@
+#!/bin/sh -e
+
+sed -i '/chown/d' bsd.prog.mk
+
+./configure \
+    --enable-static \
+    --with-shadow \
+    --with-timestamp \
+    --without-pam
+
+gmake
+gmake DESTDIR="$1" install
+
+install -D doas.conf "$1/etc/doas.conf"
