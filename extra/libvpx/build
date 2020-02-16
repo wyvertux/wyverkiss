@@ -1,0 +1,23 @@
+#!/bin/sh -e
+
+patch -p1 < fix-busybox-diff.patch
+
+CC=cc CXX=c++ ./configure \
+    --prefix=/usr \
+    --enable-vp8 \
+    --enable-vp9 \
+    --disable-tools \
+    --disable-examples \
+    --disable-docs \
+    --enable-experimental \
+    --enable-runtime-cpu-detect \
+    --enable-shared \
+    --enable-postproc \
+    --enable-pic \
+    --disable-install-docs \
+    --disable-install-srcs \
+    --disable-install-bins \
+    --as=yasm
+
+gmake
+gmake DESTDIR="$1" install
