@@ -1,0 +1,18 @@
+#!/bin/sh -e
+
+for patch in *.patch; do
+    patch -p1 < "$patch"
+done
+
+# Avoid repeating ourselves.
+mk() {
+    gmake \
+        libdir=/usr/lib/ \
+        bindir=/usr/bin/ \
+        mandir=/usr/share/man/ \
+        includedir=/usr/include/ \
+        "$@"
+}
+
+mk CC="${CC:-cc}"
+mk DESTDIR="$1" install
