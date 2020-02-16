@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --with-xkb-rules-symlink=xfree86,xorg \
+    --enable-compat-rules \
+    --without-xsltproc
+
+gmake
+gmake DESTDIR="$1" install

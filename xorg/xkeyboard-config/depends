@@ -1,0 +1,4 @@
+gmake   make
+libX11  make
+python  make
+xkbcomp
