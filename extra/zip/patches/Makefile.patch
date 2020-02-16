@@ -1,0 +1,11 @@
+--- Makefile
++++ Makefile
+@@ -159,7 +159,7 @@
+ install:        $(ZIPS)
+ 	-$(INSTALL_D) $(BINDIR)
+ 	$(INSTALL_PROGRAM) $(ZIPS) $(BINDIR)
+-	-cd $(BINDIR); $(CHMOD) $(BINFLAGS) $(ZIPS)
++	-$(CHMOD) $(BINFLAGS) $(BINDIR)$(ZIPS)
+ 	-$(INSTALL_D) $(MANDIR)
+ 	$(INSTALL_PROGRAM) man/zip.1 $(MANDIR)/zip.$(MANEXT)
+ 	$(CHMOD) $(MANFLAGS) $(MANDIR)/zip.$(MANEXT)
