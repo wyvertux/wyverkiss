@@ -6,3 +6,7 @@
 
 make
 make DESTDIR="$1" install
+
+# Also install as byacc
+mv "$1/usr/bin/yacc" "$1/usr/bin/byacc"
+ln -s byacc "$1/usr/bin/yacc"
