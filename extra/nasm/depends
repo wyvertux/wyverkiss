@@ -1,2 +1,2 @@
-perl  make
 gmake make
+perl  make
