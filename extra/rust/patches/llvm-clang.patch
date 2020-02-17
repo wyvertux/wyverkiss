@@ -1,0 +1,44 @@
+--- rustc-1.41.0-src/src/libunwind/lib.rs
++++ rustc-1.41.0-src/src/libunwind/lib.rs
+@@ -21,8 +21,7 @@
+ }
+ 
+ #[cfg(target_env = "musl")]
+-#[link(name = "unwind", kind = "static", cfg(target_feature = "crt-static"))]
+-#[link(name = "gcc_s", cfg(not(target_feature = "crt-static")))]
++#[link(name = "unwind")]
+ extern {}
+ 
+ #[cfg(target_os = "redox")]
+--- rustc-1.41.0-src/src/libunwind/build.rs
++++ rustc-1.41.0-src/src/libunwind/build.rs
+@@ -105,15 +105,6 @@
+             cfg.file(root.join("src").join(src));
+         }
+ 
+-        if target_env == "musl" {
+-            // use the same C compiler command to compile C++ code so we do not need to setup the
+-            // C++ compiler env variables on the builders
+-            cfg.cpp(false);
+-            // linking for musl is handled in lib.rs
+-            cfg.cargo_metadata(false);
+-            println!("cargo:rustc-link-search=native={}", env::var("OUT_DIR").unwrap());
+-        }
+-
+         cfg.compile("unwind");
+     }
+ }
+--- rustc-1.41.0-src/src/librustc_target/spec/linux_musl_base.rs.orig
++++ rustc-1.41.0-src/src/librustc_target/spec/linux_musl_base.rs
+@@ -24,9 +24,10 @@
+     base.pre_link_objects_exe_crt.push("crt1.o".to_string());
+     base.pre_link_objects_exe_crt.push("crti.o".to_string());
+     base.post_link_objects_crt.push("crtn.o".to_string());
++    base.post_link_objects_crt.push("-lunwind".to_string());
+ 
+     // These targets statically link libc by default
+-    base.crt_static_default = true;
++    base.crt_static_default = false;
+     // These targets allow the user to choose between static and dynamic linking.
+     base.crt_static_respected = true;
+ 
