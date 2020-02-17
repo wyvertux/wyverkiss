@@ -1,0 +1,31 @@
+Full credits to E5ten.
+
+---
+diff --git a/meson.build b/meson.build
+index a43fc0c..5b08852 100644
+--- a/meson.build
++++ b/meson.build
+@@ -139,8 +139,8 @@ have_version_script = cc.links(
+ yacc = find_program('bison', 'win_bison', 'byacc')
+ yacc_gen = generator(
+     yacc,
+-    output: ['@BASENAME@.c', '@BASENAME@.h'],
+-    arguments: ['@INPUT@', '--defines=@OUTPUT1@', '--output=@OUTPUT0@', '-p _xkbcommon_'],
++    output: ['@BASENAME@.tab.c', '@BASENAME@.tab.h'],
++    arguments: ['-p', '_xkbcommon_', '-b', '@BUILD_DIR@/@BASENAME@', '-d', '@INPUT@'],
+ )
+ libxkbcommon_sources = [
+     'src/compose/parser.c',
+diff --git a/src/xkbcomp/parser-priv.h b/src/xkbcomp/parser-priv.h
+index f10351a..10f5fbe 100644
+--- a/src/xkbcomp/parser-priv.h
++++ b/src/xkbcomp/parser-priv.h
+@@ -30,7 +30,7 @@
+ struct parser_param;
+ struct scanner;
+ 
+-#include "parser.h"
++#include "parser.tab.h"
+ 
+ int
+ _xkbcommon_lex(YYSTYPE *yylval, struct scanner *scanner);
