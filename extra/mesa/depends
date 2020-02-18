@@ -1,0 +1,19 @@
+byacc        make
+expat
+flex         make
+libX11
+libXdamage
+libXext
+libXrandr
+libXrender
+libXxf86vm
+libdrm
+libelf
+libxcb
+libxshmfence
+llvm
+meson        make
+python       make
+python-mako  make
+xorgproto
+zlib
