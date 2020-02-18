@@ -1,0 +1,12 @@
+#!/bin/sh -e
+
+patch -p1 < fontconfig-fix-1744377.patch
+
+./configure \
+    --prefix=/usr \
+    --localstatedir=/var \
+    --sysconfdir=/etc \
+    --with-xmldir=/etc/fonts
+
+gmake
+gmake DESTDIR="$1" install

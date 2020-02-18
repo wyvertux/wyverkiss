@@ -1,0 +1,5 @@
+automake make
+expat
+freetype-harfbuzz
+gmake    make
+gperf    make
