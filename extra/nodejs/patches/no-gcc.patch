@@ -1,0 +1,12 @@
+--- node-v13.8.0/node.gyp
++++ node-v13.8.0/node.gyp
+@@ -301,9 +301,6 @@
+           '-Wl,-bnoerrmsg',
+         ],
+       }],
+-      ['OS == "linux" and llvm_version != "0.0"', {
+-        'libraries': ['-latomic'],
+-      }],
+     ],
+   },
+ 
