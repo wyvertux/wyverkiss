@@ -1,0 +1,40 @@
+#!/bin/sh -e
+
+build_freetype() (
+    cd freetype
+
+    CFLAGS="$CFLAGS -DDEFAULT_TT_INTERPRETER_VERSION=TT_INTERPRETER_VERSION_40" \
+    ./configure \
+        --prefix=/usr \
+        --enable-freetype-config \
+        --with-harfbuzz="$2"
+
+    gmake
+    gmake DESTDIR="$1" install
+)
+
+build_harfbuzz() (
+    cd harfbuzz
+
+    ./configure \
+        --prefix=/usr \
+        --with-glib=yes \
+        --with-icu=no
+
+    gmake
+    gmake DESTDIR="$1" install
+)
+
+build_freetype "$1" no
+
+# Point Harfbuzz to the Freetype files.
+export FREETYPE_CFLAGS="-I$PWD/freetype/include"
+export FREETYPE_LIBS="-L$1/usr/lib -lfreetype"
+
+build_harfbuzz "$1"
+
+# Point Freetype to the Harfbuzz files.
+export HARFBUZZ_CFLAGS="-I$PWD/harfbuzz/src"
+export HARFBUZZ_LIBS="-L$PWD/harfbuzz/src/.libs -lharfbuzz"
+
+build_freetype "$1" yes
