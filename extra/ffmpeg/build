@@ -1,0 +1,27 @@
+#!/bin/sh -e
+
+./configure \
+    --cc="${CC:-cc}" \
+    --cxx="${CXX:-c++}" \
+    --prefix=/usr \
+    --enable-shared \
+    --enable-gpl \
+    --enable-version3 \
+    --enable-libass \
+    --enable-libmp3lame \
+    --enable-libopus \
+    --enable-libvorbis \
+    --enable-libtheora \
+    --enable-libvpx \
+    --enable-libx264 \
+    --enable-libx265 \
+    --enable-libxvid \
+    --enable-libwebp \
+    --enable-libdrm \
+    --disable-debug
+
+gmake
+gmake DESTDIR="$1" install
+
+# Remove examples.
+rm -rf "$1/usr/share/ffmpeg/examples"

@@ -1,0 +1,16 @@
+alsa-lib
+gmake make
+lame
+libass
+libogg
+libtheora
+libvorbis
+libvpx
+libwebp
+opus
+perl make
+pkgconf make
+x264
+x265
+xvidcore
+yasm make
