@@ -1,0 +1,4 @@
+fontconfig
+libX11
+libXft
+netbsd-curses make
