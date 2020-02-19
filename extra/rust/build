@@ -13,21 +13,17 @@ if kiss l rust 2>/dev/null; then
 cat >> config.toml <<EOF
 rustc = "/usr/bin/rustc"
 cargo = "/usr/bin/cargo"
-rustfmt = "/usr/bin/rustfmt"
 EOF
 else
     # Man, this is ugly. But it'll do.
     # The libgcc_s.so here are ripped directly from KISS' GCC 9.2.0 from
     # their chroot. It's only needed for the bootstrap tarball, basically.
-
-    # Make rust find libgcc inside the temporary build directory.
-    export LD_LIBRARY_PATH="$PWD/libgcc:$LD_LIBRARY_PATH"
-
-    # Wrap libgcc_s.so to libunwind.
-    mkdir -p libgcc
-    mv libgcc_s.so.1 libgcc/
-    printf "%s\n" "INPUT(-lunwind)" > libgcc/libgcc_s.so
-    chmod +x libgcc/libgcc_s.so
+    kiss l libgcc-bin >/dev/null 2>&1 || {
+        echo "Please install libgcc-bin for bootstrapping Rust. It will be"
+        echo "uninstalled immediately after the Rust build is successful."
+        echo "I'm sorry for this terrible hack."
+        false
+    }
 
     # This package mimics the download process of rust's 'x.py'
     # bootstrap library to allow for the removal of the internet

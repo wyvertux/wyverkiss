@@ -1,0 +1,12 @@
+# Man, this is ugly. But it'll do.
+# The libgcc_s.so here are ripped directly from KISS' GCC 9.2.0 from
+# their chroot. It's only needed for the bootstrap tarball, basically.
+
+echo "This libgcc-bin is ripped directly from KISS Linux's chroot tarball."
+echo "As such, you can see the source in KISS Linux's mainline repo."
+echo "Rust should really link their stage0's statically."
+echo "It would be uninstalled directly after Rust is installed."
+echo "I'm truly sorry for this terrible hack."
+
+install -Dm755 libgcc_s.so.1 -t "$1/usr/lib"
+printf "%s\n" "INPUT(-lunwind)" > "$1/usr/lib/libgcc_s.so"
