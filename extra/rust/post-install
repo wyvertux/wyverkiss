@@ -1,4 +1,0 @@
-kiss l libgcc-bin >/dev/null 2>&1 && {
-    echo "Uninstalling temporary libgcc-bin"
-    kiss r libgcc-bin
-}
