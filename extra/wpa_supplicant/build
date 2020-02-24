@@ -1,0 +1,6 @@
+#!/bin/sh -e
+
+cd wpa_supplicant
+
+gmake LIBDIR=/usr/lib BINDIR=/usr/bin
+gmake LIBDIR=/usr/lib BINDIR=/usr/bin DESTDIR="$1" install
