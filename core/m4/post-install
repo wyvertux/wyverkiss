@@ -1,6 +1,5 @@
 #!/bin/sh
 
 cat <<EOF
-NOTE: This package is Quasar M4, not GNU m4. GNU m4 is packaged as
-      gm4 in wyverkiss/gnu.
+NOTE: This package is Quasar M4, not GNU m4.
 EOF
