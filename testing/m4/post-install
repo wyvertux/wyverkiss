@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cat <<EOF
+NOTE: This package is OpenBSD m4, not GNU m4.
+EOF
