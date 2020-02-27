@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+sed -i 's/ | \$(FLEX)$//' doc/Makefile.in
+
 ./configure \
     --prefix=/usr \
     --disable-static \
@@ -7,5 +9,7 @@
     ac_cv_func_malloc_0_nonnull=yes \
     ac_cv_func_realloc_0_nonnull=yes
 
-gmake
-gmake DESTDIR="$1" install
+make
+make DESTDIR="$1" install
+
+ln -s flex "$1/usr/bin/lex"
