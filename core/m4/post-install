@@ -1,5 +1,5 @@
 #!/bin/sh
 
 cat <<EOF
-NOTE: This package is Quasar M4, not GNU m4.
+NOTE: This package is OpenBSD m4, not GNU m4.
 EOF

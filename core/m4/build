@@ -1,4 +1,9 @@
 #!/bin/sh -e
 
-gmake
-gmake DESTDIR="$1" PREFIX=/usr install
+./configure \
+    --prefix=/usr \
+    --mandir=/usr/share/man \
+    --enable-m4
+
+make
+make DESTDIR="$1" install
