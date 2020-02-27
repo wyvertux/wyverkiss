@@ -1,10 +1,12 @@
 #!/bin/sh -e
 
+sed -Ei 's|subst ([^,]*),([^,]*),\$\(([^,)]*)\)|\3:\1%=\2%|' rules/Makefile.in
+
 ./configure \
     --prefix=/usr \
     --with-xkb-rules-symlink=xfree86,xorg \
     --enable-compat-rules \
     --without-xsltproc
 
-gmake
-gmake DESTDIR="$1" install
+make
+make DESTDIR="$1" install
