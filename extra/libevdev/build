@@ -1,8 +1,10 @@
 #!/bin/sh -e
 
+sed -i '/--no-print-directory/d' Makefile.in
+
 ./configure \
     --prefix=/usr \
     --disable-gcov
 
-gmake
-gmake DESTDIR="$1" install
+make
+make DESTDIR="$1" install
