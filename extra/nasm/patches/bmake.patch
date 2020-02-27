@@ -1,0 +1,17 @@
+diff --git a/Makefile.in b/Makefile.in
+index 68ec9d45..c5cfe971 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -65,9 +65,9 @@ X               = @EXEEXT@
+ A		= @LIBEXT@
+ 
+ # Debug stuff
+-ifeq ($(TRACE),1)
+-	CFLAGS += -DNASM_TRACE
+-endif
++CFLAGS_$(TRACE) =
++CFLAGS_1 = -DNASM_TRACE
++CFLAGS += $(CFLAGS_$(TRACE))
+ 
+ .SUFFIXES:
+ .SUFFIXES: $(X) .$(O) .$(A) .xml .1 .c .i .s .txt
