@@ -1,5 +1,8 @@
 #!/bin/sh -e
 
+sed -i '/\$(edit)\|\.\(service\|rules\)/d' alsactl/Makefile.in
+sed -i '/\$(edit)\|\.\(service\|rules\)/d' alsaucm/Makefile.in
+
 ./configure \
     --prefix=/usr \
     --sbindir=/usr/bin \
@@ -7,5 +10,5 @@
     --disable-bat \
     --disable-xmlto
 
-gmake
-gmake DESTDIR="$1" install
+make
+make DESTDIR="$1" install
