@@ -7,10 +7,8 @@ libtheora
 libvorbis
 libvpx
 libwebp
+nasm make
 opus
-perl make
-pkgconf make
 x264
 x265
 xvidcore
-yasm make
