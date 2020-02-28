@@ -1,5 +1,10 @@
 #!/bin/sh -e
 
+# Swap to shell script instead of perl script for conversion of rules
+# files. See files/xml2lst.
+sed -i 's/perl //;s/xml2lst\.pl/xml2lst/' rules/Makefile.in
+
+# Make it work with bmake.
 sed -Ei 's|subst ([^,]*),([^,]*),\$\(([^,)]*)\)|\3:\1%=\2%|' rules/Makefile.in
 
 ./configure \
