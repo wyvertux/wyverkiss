@@ -17,7 +17,7 @@ CC=cc CXX=c++ ./configure \
     --disable-install-docs \
     --disable-install-srcs \
     --disable-install-bins \
-    --as=yasm
+    --as=nasm
 
 gmake
 gmake DESTDIR="$1" install
