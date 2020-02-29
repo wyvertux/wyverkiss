@@ -1,5 +1,5 @@
 ebac9861b43c7207af36e24402dfdc5463a4df4bdb015ccb2b165251c0fdcf7c  rustc-1.41.1-src.tar.xz
-c647bb7f399b3d18e345b2dab1fb073470582a9298e83d8648f6661544df7279  rust-std-1.40.0-x86_64-unknown-linux-musl.tar.xz?no-extract
-769b9e31557fcc0ea2a661f88b679d3dbd62b537807c7b3c75ac6816a1be4fa3  rustc-1.40.0-x86_64-unknown-linux-musl.tar.xz?no-extract
-848646326474392bdac70a5bfa06efda4c36e2bbbf088f07456f98c7575844e1  cargo-0.41.0-x86_64-unknown-linux-musl.tar.xz?no-extract
+b2fa37bf3cad45c9e150c8b1d50723effb656cf93e0ec8d864414d492220fed3  rust-std-1.40.0-x86_64-unknown-linux-musl.tar.xz?no-extract
+400881f3dcdcd4c109f5801e07a4a6ece769cf3d79ec90110da535bc563349db  rustc-1.40.0-x86_64-unknown-linux-musl.tar.xz?no-extract
+358a8330e57a7e23e2c90424385a5767033228847a11e5801e489eacff1f7c12  cargo-0.41.0-x86_64-unknown-linux-musl.tar.xz?no-extract
 1d3220d91519e7064b84435ff03e05a8ac4901ebf44765e76900a71eb9a52f8c  llvm-clang.patch
