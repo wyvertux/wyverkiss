@@ -1,11 +1,13 @@
 #!/bin/sh -e
 
+sed -i '/assembler-with-cpp/s%\$<%$(top_srcdir)/libffi.map.in%' Makefile.in
+
 ./configure \
     --prefix=/usr \
     --with-pic
 
-gmake
-gmake DESTDIR="$1" install
+make
+make DESTDIR="$1" install
 
 # Maintain compatibility and avoid the need
 # for rebuilds of all packages linking to
