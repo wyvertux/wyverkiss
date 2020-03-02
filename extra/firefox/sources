@@ -1,0 +1,13 @@
+https://ftp.mozilla.org/pub/firefox/releases/68.5.0esr/source/firefox-68.5.0esr.source.tar.xz
+https://ftp.gnu.org/gnu/autoconf/autoconf-2.13.tar.gz autoconf2.13/
+https://ftp.gnu.org/gnu/m4/m4-1.4.18.tar.xz m4-1.4.18/
+files/mozconfig
+files/stab.h toolkit/crashreporter/google-breakpad/src/
+patches/add-stl-wrappers.patch
+patches/fix-fortify-system-wrappers.patch
+patches/fix-seccomp-bpf.patch
+patches/fix-toolkit.patch
+patches/fix-tools.patch
+patches/fix-webrtc-glibcisms.patch
+patches/fix-bug-1261392.patch
+patches/mallinfo.patch
