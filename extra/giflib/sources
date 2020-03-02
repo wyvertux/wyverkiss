@@ -1,1 +1,2 @@
-/var/db/kiss/repo/extra/giflib/sources
+https://downloads.sourceforge.net/giflib/giflib-5.2.1.tar.gz
+patches/bmake.patch

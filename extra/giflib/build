@@ -1,4 +1,6 @@
 #!/bin/sh -e
 
-gmake
-gmake DESTDIR="$1" PREFIX=/usr install
+patch -p1 < bmake.patch
+
+make
+make DESTDIR="$1" PREFIX=/usr install

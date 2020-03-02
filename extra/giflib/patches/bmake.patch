@@ -1,0 +1,28 @@
+--- a/Makefile
++++ b/Makefile
+@@ -22,7 +22,7 @@
+ 
+ # No user-serviceable parts below this line
+ 
+-VERSION:=$(shell ./getversion)
++VERSION!=./getversion
+ LIBMAJOR=7
+ LIBMINOR=2
+ LIBPOINT=0
+@@ -65,6 +65,7 @@
+ 	$(MAKE) -C doc
+ 
+ $(UTILS):: libgif.a libutil.a
++	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o $@ $@.c $(LDLIBS) libutil.a
+ 
+ libgif.so: $(OBJECTS) $(HEADERS)
+ 	$(CC) $(CFLAGS) -shared $(LDFLAGS) -Wl,-soname -Wl,libgif.so.$(LIBMAJOR) -o libgif.so $(OBJECTS)
+@@ -92,7 +93,7 @@
+ install: all install-bin install-include install-lib install-man
+ install-bin: $(INSTALLABLE)
+ 	$(INSTALL) -d "$(DESTDIR)$(BINDIR)"
+-	$(INSTALL) $^ "$(DESTDIR)$(BINDIR)"
++	$(INSTALL) $(INSTALLABLE) "$(DESTDIR)$(BINDIR)"
+ install-include:
+ 	$(INSTALL) -d "$(DESTDIR)$(INCDIR)"
+ 	$(INSTALL) -m 644 gif_lib.h "$(DESTDIR)$(INCDIR)"
