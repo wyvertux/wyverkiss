@@ -1,16 +1,16 @@
 #!/bin/sh -e
 
-# autoconf 2.13 requires GNU m4.
+# autoconf requires GNU m4.
 (
     cd m4-1.4.18
     ./configure \
-        --prefix="$PWD/../m4"
+        --prefix="$PWD/../junk"
 
     make
     make install
 )
 
-export PATH=$PWD/m4/bin:$PATH
+export PATH=$PWD/junk/bin:$PATH
 
 # Build autoconf 2.13 for Firefox's sole use.
 # See: https://bugzilla.mozilla.org/show_bug.cgi?id=104642
@@ -18,15 +18,29 @@ export PATH=$PWD/m4/bin:$PATH
     cd autoconf2.13
 
     ./configure \
-        --prefix="$PWD/../autoconf" \
+        --prefix="$PWD/../junk" \
         --program-suffix=-2.13
 
     make
     make install
 )
 
-export PATH=$PWD/autoconf/bin:$PATH
+# Build yasm for Firefox's sole use.
+# Firefox is the only package which needs it
+# and upstream is kinda dead.
+(
+    cd yasm
+
+    ./configure \
+        --prefix="$PWD/../junk"
+
+    make
+    make install
+)
+
 export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
+export CC=${CC:-cc}
+export CXX=${CXX:-c++}
 
 # Keep memory usage as low as possible.
 export LDFLAGS="$LDFLAGS -Wl,--as-needed -Wl,--no-keep-memory -Wl,--stats"
