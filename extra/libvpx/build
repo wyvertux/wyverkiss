@@ -6,14 +6,15 @@ CC=cc CXX=c++ ./configure \
     --prefix=/usr \
     --enable-vp8 \
     --enable-vp9 \
-    --disable-tools \
-    --disable-examples \
-    --disable-docs \
     --enable-experimental \
     --enable-runtime-cpu-detect \
     --enable-shared \
     --enable-postproc \
     --enable-pic \
+    --disable-tools \
+    --disable-examples \
+    --disable-docs \
+    --disable-unit-tests \
     --disable-install-docs \
     --disable-install-srcs \
     --disable-install-bins \

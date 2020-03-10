@@ -1,1 +1,2 @@
-/var/db/kiss/repo/extra/libvpx/checksums
+8735d9fcd1a781ae6917f28f239a8aa358ce4864ba113ea18af4bb2dc8b474ac  v1.8.2.tar.gz
+ce802d64bcbeb4230527aea2b4284d9844fb12fa5aca868a94e03982f85ec45b  fix-busybox-diff.patch

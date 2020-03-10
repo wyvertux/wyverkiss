@@ -1,1 +1,2 @@
-/var/db/kiss/repo/extra/libvpx/sources
+https://github.com/webmproject/libvpx/archive/v1.8.2.tar.gz
+patches/fix-busybox-diff.patch
