@@ -39,12 +39,12 @@ export PATH=$PWD/junk/bin:$PATH
 )
 
 export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
-export CC=${CC:-cc}
-export CXX=${CXX:-c++}
+export CC="${CC:-cc}"
+export CXX="${CXX:-c++}"
 
 # Keep memory usage as low as possible.
 export LDFLAGS="$LDFLAGS -Wl,--as-needed -Wl,--no-keep-memory -Wl,--stats"
-export MOZ_LINK_FLAGS=$LDFLAGS
+export MOZ_LINK_FLAGS="$LDFLAGS"
 export MOZ_DEBUG_FLAGS=-g0
 export RUSTFLAGS=-Cdebuginfo=0
 
