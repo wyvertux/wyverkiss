@@ -3,7 +3,16 @@
 patch -p1 < no-gcc.patch
 
 CC=cc CXX=c++ ./configure \
-    --prefix=/usr
+    --prefix=/usr \
+    --shared-zlib \
+    --without-intl \
+    --without-etw \
+    --without-dtrace \
+    --without-report \
+    --without-node-snapshot \
+    --without-node-code-cache
 
 gmake
 gmake DESTDIR="$1" install
+
+rm -rf "$1/usr/include/node/openssl"

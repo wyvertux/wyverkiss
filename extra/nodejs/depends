@@ -1,1 +1,3 @@
-python make
+gmake   make
+python  make
+zlib
