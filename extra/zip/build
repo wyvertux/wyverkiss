@@ -1,13 +1,11 @@
 #!/bin/sh -e
 
-(cd unix; patch -p1 < ../Makefile.patch)
-
-make \
+make -B \
     prefix=/usr \
     CC="${CC:-cc} $CFLAGS $CXXFLAGS" \
     -f unix/Makefile generic
 
-make \
+make -B \
     prefix="$1/usr" \
     MANDIR="$1/usr/share/man/man1" \
     -f unix/Makefile install
