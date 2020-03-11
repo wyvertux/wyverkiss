@@ -17,5 +17,5 @@
     --with-pic \
     --with-ca-fallback
 
-gmake curl_LDFLAGS=-all-static
-gmake DESTDIR="$1" install
+make curl_LDFLAGS=-all-static
+make -B DESTDIR="$1" install
