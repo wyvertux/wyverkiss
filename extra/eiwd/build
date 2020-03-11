@@ -1,0 +1,12 @@
+#!/bin/sh -e
+
+./configure \
+    --prefix=/usr \
+    --libexecdir=/usr/bin \
+    --localstatedir=/var \
+    --disable-dbus
+
+# AM_MAKEFLAGS must be emptied. Otherwise, it'll set --no-print-directory.
+# bmake doesn't support it.
+make AM_MAKEFLAGS=
+make AM_MAKEFLAGS= DESTDIR="$1" install
