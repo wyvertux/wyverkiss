@@ -6,7 +6,7 @@
     --mandir=/usr/share/man \
     --localstatedir=/var
 
-make
+gmake
 
 install -Dm 755 ccache       "$1/usr/bin/ccache"
 install -Dm 644 doc/ccache.1 "$1/usr/share/man/man1/ccache.1"

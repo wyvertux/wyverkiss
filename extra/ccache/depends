@@ -1,1 +1,2 @@
-/var/db/kiss/repo/extra/ccache/depends
+gmake make
+zlib
