@@ -7,7 +7,7 @@
 -#[link(name = "unwind", kind = "static", cfg(target_feature = "crt-static"))]
 -#[link(name = "gcc_s", cfg(not(target_feature = "crt-static")))]
 +#[link(name = "unwind")]
- extern {}
+ extern "C" {}
  
  #[cfg(target_os = "redox")]
 --- rustc-1.41.0-src/src/libunwind/build.rs
