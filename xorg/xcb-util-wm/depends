@@ -1,3 +1,4 @@
 gmake    make
 libxcb
+m4       make
 xcb-util make
