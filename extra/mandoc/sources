@@ -1,3 +1,1 @@
-https://fossies.org/linux/misc/mandoc-1.14.5.tar.gz
-patches/Makefile-do-not-use-cd.patch
-patches/mandoc-no-warn.patch
+/var/db/kiss/repo/extra/mandoc/sources
