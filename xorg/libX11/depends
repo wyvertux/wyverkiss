@@ -1,5 +1,1 @@
-gmake     make
-libXau
-libxcb
-xorgproto
-xtrans    make
+/var/db/kiss/repo/xorg/libX11/depends

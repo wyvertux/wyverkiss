@@ -3,10 +3,12 @@
 CFLAGS_FOR_BUILD=-fPIC \
 ./configure \
     --prefix=/usr \
+    --without-xmlto \
+    --disable-specs \
     --enable-static
 
-gmake
-gmake DESTDIR="$1" install
+make
+make DESTDIR="$1" install
 
 # This will be removed once 'xorgproto' 2019.2
 # is released.
