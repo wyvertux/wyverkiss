@@ -1,8 +1,10 @@
 #!/bin/sh -e
 
+patch -p1 < Makefile.patch
+
 ./configure \
     --prefix=/usr \
     --disable-static
 
-gmake
-gmake DESTDIR="$1" install
+make
+make DESTDIR="$1" install
