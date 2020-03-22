@@ -1,0 +1,8 @@
+#!/bin/sh -e
+
+meson \
+    --prefix=/usr \
+    build/meson bins
+
+ninja -C bins
+DESTDIR="$1" ninja -C bins install
