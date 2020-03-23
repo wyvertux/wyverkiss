@@ -1,9 +1,39 @@
 #!/bin/sh -e
 
-./configure \
-    --prefix=/usr \
-    --enable-custom-modes \
-    --enable-float-approx
+export DESTDIR="$1"
 
-gmake
-gmake DESTDIR="$1" install
+[ ! -r opus_buildtype.cmake ] && \
+cat > opus_buildtype.cmake <<EOF
+# Set a default build type if none was specified
+
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  if(CMAKE_C_FLAGS)
+    message(STATUS "CMAKE_C_FLAGS: " \${CMAKE_C_FLAGS})
+  else()
+    set(default_build_type "Release")
+    message(
+      STATUS
+        "Setting build type to '\${default_build_type}' as none was specified and no CFLAGS was exported."
+      )
+    set(CMAKE_BUILD_TYPE "\${default_build_type}"
+        CACHE STRING "Choose the type of build."
+        FORCE)
+    # Set the possible values of build type for cmake-gui
+    set_property(CACHE CMAKE_BUILD_TYPE
+                 PROPERTY STRINGS
+                          "Debug"
+                          "Release"
+                          "MinSizeRel"
+                          "RelWithDebInfo")
+  endif()
+endif()
+EOF
+
+cmake -B build \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+    -DBUILD_SHARED_LIBS=ON \
+    -DOPUS_CUSTOM_MODES=ON
+
+cmake --build   build
+cmake --install build
