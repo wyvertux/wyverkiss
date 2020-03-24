@@ -1,1 +1,1 @@
-meson make
+cmake make

@@ -1,8 +1,11 @@
 #!/bin/sh -e
 
-meson \
-    --prefix=/usr \
-    build/meson bins
+export DESTDIR="$1"
 
-ninja -C bins
-DESTDIR="$1" ninja -C bins install
+cmake -B bins \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=lib \
+    build/cmake
+
+cmake --build   bins
+cmake --install bins
