@@ -1,5 +1,8 @@
 #!/bin/sh -e
 
+# Fix a python3 incompatibility.
+sed -i 's|/ (8|// (8|' tools/gyp/pylib/gyp/generator/ninja.py
+
 patch -p1 < no-gcc.patch
 
 CC=cc CXX=c++ ./configure \
@@ -10,9 +13,11 @@ CC=cc CXX=c++ ./configure \
     --without-dtrace \
     --without-report \
     --without-node-snapshot \
-    --without-node-code-cache
+    --without-node-code-cache \
+    --ninja
 
-gmake
-gmake DESTDIR="$1" install
+ninja -C out/Release
+tools/install.py install "$1" /usr
 
+# Remove unneeded headers.
 rm -rf "$1/usr/include/node/openssl"
