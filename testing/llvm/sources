@@ -1,9 +1,9 @@
-https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0-rc3/llvm-10.0.0rc3.src.tar.xz llvm/
-https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0-rc3/clang-10.0.0rc3.src.tar.xz clang/
-https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0-rc3/compiler-rt-10.0.0rc3.src.tar.xz compiler-rt/
-https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0-rc3/libunwind-10.0.0rc3.src.tar.xz libunwind/
-https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0-rc3/libcxx-10.0.0rc3.src.tar.xz libcxx/
-https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0-rc3/libcxxabi-10.0.0rc3.src.tar.xz libcxxabi/
-https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0-rc3/lld-10.0.0rc3.src.tar.xz lld/
+https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/llvm-10.0.0.src.tar.xz llvm/
+https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang-10.0.0.src.tar.xz clang/
+https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/compiler-rt-10.0.0.src.tar.xz compiler-rt/
+https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/libunwind-10.0.0.src.tar.xz libunwind/
+https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/libcxx-10.0.0.src.tar.xz libcxx/
+https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/libcxxabi-10.0.0.src.tar.xz libcxxabi/
+https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/lld-10.0.0.src.tar.xz lld/
 patches/libcxx-musl_compat.patch
 files/c99
