@@ -17,6 +17,9 @@
 patch -p1 < llvm-clang.patch
 
 cat > config.toml <<EOF
+[llvm]
+link-shared = true
+
 [build]
 build = "x86_64-unknown-linux-musl"
 host = [ "x86_64-unknown-linux-musl" ]
