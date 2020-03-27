@@ -3,6 +3,21 @@
 # Fix a python3 incompatibility.
 sed -i 's|/ (8|// (8|' tools/gyp/pylib/gyp/generator/ninja.py
 
+cat > no-gcc.patch <<EOF
+--- node-v13.9.0/node.gyp
++++ node-v13.9.0/node.gyp
+@@ -301,9 +301,6 @@
+           '-Wl,-bnoerrmsg',
+         ],
+       }],
+-      ['OS == "linux" and llvm_version != "0.0"', {
+-        'libraries': ['-latomic'],
+-      }],
+     ],
+   },
+ 
+EOF
+
 patch -p1 < no-gcc.patch
 
 CC=cc CXX=c++ ./configure \
@@ -21,3 +36,4 @@ tools/install.py install "$1" /usr
 
 # Remove unneeded headers.
 rm -rf "$1/usr/include/node/openssl"
+
