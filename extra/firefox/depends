@@ -10,6 +10,7 @@ freetype-harfbuzz
 fribidi
 gdk-pixbuf
 glib
+gmake         make
 gnu-as        make
 gtk+2         make
 gtk+3
