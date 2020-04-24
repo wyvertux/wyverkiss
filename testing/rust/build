@@ -6,7 +6,7 @@
 # The bootstrap uses a custom-made rust lib, tailored specifically for
 # Wyverkiss.
 {
-    cache_dir=build/cache/2020-03-12
+    cache_dir=build/cache/2020-04-23
     mkdir -p "$cache_dir"
 
     for tarball in *.tar.xz\?no-extract; do
@@ -15,6 +15,7 @@
 }
 
 patch -p1 < llvm-clang.patch
+patch -p1 < llvm10.patch
 
 cat > config.toml <<EOF
 [llvm]
