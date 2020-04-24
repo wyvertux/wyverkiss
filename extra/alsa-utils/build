@@ -8,7 +8,8 @@ sed -i '/\$(edit)\|\.\(service\|rules\)/d' alsaucm/Makefile.in
     --sbindir=/usr/bin \
     --disable-alsaconf \
     --disable-bat \
-    --disable-xmlto
+    --disable-xmlto \
+    --disable-nls
 
 make
 make DESTDIR="$1" install
