@@ -10,5 +10,6 @@ install -Dm644 pigz.1 "$1/usr/share/man/man1/pigz.1"
 
 # gzip compatibility
 ln -s pigz   "$1/usr/bin/gzip"
+ln -s pigz   "$1/usr/bin/zcat"
 ln -s unpigz "$1/usr/bin/gunzip"
 ln -s pigz.1 "$1/usr/share/man/man1/gzip.1"
