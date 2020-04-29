@@ -1,6 +1,7 @@
 atk
 fribidi
 gdk-pixbuf
+gmake make
 libXcomposite
 libXcursor
 libXdamage
@@ -9,6 +10,5 @@ libXi
 libXinerama
 libXrandr
 libepoxy
-meson  make
 pango
 python make

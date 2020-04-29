@@ -1,31 +1,37 @@
 #!/bin/sh -e
 
-export DESTDIR="$1"
-
 # Remove 'atk-bridge' dependency which removes the 'dbus' dependency.
-sed -i "/atk_pkgs += \['atk-bridge-2.0'\]/d" meson.build
-sed -i "/atkbridge_dep  = dependency('atk-bridge-2.0', version: atk_req)/d" \
-    meson.build
+sed -i 's/ATK_PACKAGES="atk atk-bridge-2.0"/ATK_PACKAGES="atk"/' \
+    configure
 
 sed -i '/<atk-bridge.h>/d;/atk_bridge_adaptor_init/d' \
     gtk/a11y/gtkaccessibility.c
 
 # Don't build GTK examples/demos/testsuite.
-sed -i 's/demos tests testsuite examples/tests/' Makefile.am Makefile.in
+sed -i 's/demos tests testsuite examples//' Makefile.am Makefile.in
+sed -i 's/docs m4macros/m4macros/'          Makefile.am Makefile.in
 
-meson \
+MAKE=gmake ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
     --localstatedir=/var \
-    -Dx11_backend=true \
-    -Dwayland_backend=false \
-    -Dxinerama=yes \
-    -Dintrospection=false \
-    -Dcolord=no \
-    -Dexamples=false \
-    -Ddemos=false \
-    -Dtests=false \
-    . build
+    --enable-xkb \
+    --enable-xinerama \
+    --enable-xrandr \
+    --enable-xfixes \
+    --enable-xcomposite \
+    --enable-xdamage \
+    --enable-x11-backend \
+    --enable-debug=no \
+    --disable-schemas-compile \
+    --disable-cups \
+    --disable-papi \
+    --disable-cloudprint \
+    --disable-glibtest \
+    --disable-installed-tests \
+    --enable-introspection=no \
+    --enable-colord=no \
+    --enable-gtk-doc-html=no
 
-ninja -C build
-ninja -C build install
+gmake
+gmake DESTDIR="$1" install
