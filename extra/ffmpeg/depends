@@ -3,11 +3,12 @@ gmake make
 lame
 libass
 libogg
-libtheora
+libressl
 libvorbis
 libvpx
 libwebp
-nasm make
+linux-headers make
+nasm          make
 opus
 x264
 x265
