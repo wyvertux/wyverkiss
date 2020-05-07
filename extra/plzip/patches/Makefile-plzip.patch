@@ -1,0 +1,28 @@
+--- Makefile.in
++++ Makefile.in
+@@ -4,7 +4,7 @@
+ INSTALL_PROGRAM = $(INSTALL) -m 755
+ INSTALL_DATA = $(INSTALL) -m 644
+ INSTALL_DIR = $(INSTALL) -d -m 755
+-LIBS = -llz -lpthread
++LIBS = -llz -lpthread -lunwind -lc++abi
+ SHELL = /bin/sh
+ CAN_RUN_INSTALLINFO = $(SHELL) -c "install-info --version" > /dev/null 2>&1
+ 
+@@ -25,12 +25,13 @@
+ 	$(CXX) $(LDFLAGS) $(CXXFLAGS) -o $@ $(objs) $(LIBS)
+ 
+ decompress.o : decompress.cc
+-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(with_mingw) -c -o $@ $<
++	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(with_mingw) -c -o $@ decompress.cc
+ 
+ main.o : main.cc
+-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -DPROGVERSION=\"$(pkgversion)\" -c -o $@ $<
++	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -DPROGVERSION=\"$(pkgversion)\" -c -o $@ main.cc
+ 
+-%.o : %.cc
++.SUFFIXES: .cc .o
++.c.o:
+ 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
+ 
+ $(objs)      : Makefile
