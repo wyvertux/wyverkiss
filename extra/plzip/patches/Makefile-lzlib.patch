@@ -27,7 +27,6 @@ index c493f5e..e3c432b 100644
 +	$(CC) $(CPPFLAGS) $(CFLAGS) -fpic -fPIC -c -o $@ lzlib.c
  
 -%.o : %.c
-+SUFFIXES: .cc .o
 +.c.o:
  	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
  

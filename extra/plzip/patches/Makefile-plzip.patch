@@ -22,7 +22,7 @@
  
 -%.o : %.cc
 +.SUFFIXES: .cc .o
-+.c.o:
++.cc.o:
  	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
  
  $(objs)      : Makefile
