@@ -44,8 +44,9 @@ export PATH=$PWD/junk/bin:$PATH
 mkdir -p build
 cd build
 
-export CC="${CC:-cc}"
-export CXX="${CXX:-c++}"
+# Override ccache
+export CC="${CC:-/usr/bin/cc}"
+export CXX="${CXX:-/usr/bin/c++}"
 export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
 export MOZ_DEBUG_FLAGS=-g0
 export MOZ_NOSPAM=1
