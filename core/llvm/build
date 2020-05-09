@@ -63,3 +63,11 @@ ln -s clang-cpp "$1/usr/bin/cpp"
 
 # Clang: POSIX compliance
 install -m755 c99 "$1/usr/bin/c99"
+
+# Clang: Override libexec, the path is hardcoded, unfortunately.
+mv -f "$1/usr/libexec/ccc-analyzer" "$1/usr/lib/clang"
+mv -f "$1/usr/libexec/c++-analyzer" "$1/usr/lib/clang"
+
+rmdir "$1/usr/libexec"
+
+sed -i "s|libexec|lib/clang|" "$1/usr/bin/scan-build"
