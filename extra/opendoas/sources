@@ -1,1 +1,3 @@
-/var/db/kiss/repo/extra/opendoas/sources
+https://github.com/Duncaen/OpenDoas/archive/v6.6.1.tar.gz
+files/doas.conf
+patches/Makefile.patch

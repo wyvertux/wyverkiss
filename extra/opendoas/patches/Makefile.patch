@@ -1,0 +1,28 @@
+diff --git a/bsd.prog.mk b/bsd.prog.mk
+index df8f514..95b3c83 100644
+--- a/bsd.prog.mk
++++ b/bsd.prog.mk
+@@ -6,15 +6,21 @@ CFLAGS  += -I${CURDIR}/libopenbsd ${COPTS} -MD -MP -Wno-unused-result
+ 
+ include config.mk
+ 
+-OPENBSD := $(addprefix libopenbsd/,${OPENBSD})
++OPENBSD := ${OPENBSD:%=libopenbsd/%}
+ OBJS    := ${SRCS:.y=.c}
+ OBJS    := ${OBJS:.c=.o}
+ 
++.c.o:
++	${CC} ${CPPFLAGS} ${CFLAGS} -c -o $@ $<
++
++y.tab.c: parse.y
++	${YACC} parse.y
++
+ libopenbsd.a: ${OPENBSD}
+ 	${AR} -r $@ $?
+ 
+ ${PROG}: ${OBJS} libopenbsd.a
+-	${CC} ${CFLAGS} $^ -o $@ ${LDFLAGS}
++	${CC} ${CFLAGS} ${OBJS} libopenbsd.a -o $@ ${LDFLAGS}
+ 
+ install: ${PROG} ${PAM_DOAS} ${MAN}
+ 	mkdir -p -m 0755 ${DESTDIR}${BINDIR}

@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
 sed -i '/chown/d' bsd.prog.mk
+patch -p1 < Makefile.patch
 
 ./configure \
     --enable-static \
@@ -8,7 +9,7 @@ sed -i '/chown/d' bsd.prog.mk
     --with-timestamp \
     --without-pam
 
-gmake
-gmake DESTDIR="$1" install
+make
+make DESTDIR="$1" install
 
-install -D doas.conf "$1/etc/doas.conf"
+install -Dm600 doas.conf "$1/etc/doas.conf"
