@@ -51,6 +51,7 @@ export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
 export MOZ_DEBUG_FLAGS=-g0
 export MOZ_NOSPAM=1
 export RUSTFLAGS=-Cdebuginfo=0
+export CXXSTDLIB=c++
 
 ../configure \
     --prefix=/usr \
@@ -65,11 +66,11 @@ export RUSTFLAGS=-Cdebuginfo=0
     --enable-alsa \
     --without-system-nspr \
     --without-system-nss \
+    --without-system-libvpx \
     --with-system-jpeg \
     --with-system-zlib \
     --with-system-bz2 \
     --with-system-png \
-    --with-system-libvpx \
     --with-system-pixman \
     --with-system-ffi \
     --disable-gconf \
