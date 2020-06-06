@@ -6,18 +6,17 @@
 # The bootstrap uses a custom-made rust lib, tailored specifically for
 # Wyverkiss.
 {
-    cache_dir=build/cache/2020-03-12
+    cache_dir=build/cache/2020-05-07
     mkdir -p "$cache_dir"
 
     for tarball in *.tar.xz\?no-extract; do
         mv -f "$tarball" "$cache_dir/${tarball%%\?no-extract}"
     done
 
-    mv "$cache_dir/cargo-0.43.0-x86_64-unknown-linux-musl-new-libressl.tar.xz" "$cache_dir/cargo-0.43.0-x86_64-unknown-linux-musl.tar.xz"
+    mv "$cache_dir/cargo-0.44.0-x86_64-unknown-linux-musl-new-libressl.tar.xz" "$cache_dir/cargo-0.44.0-x86_64-unknown-linux-musl.tar.xz"
 }
 
 patch -p1 < llvm-clang.patch
-patch -p1 < llvm10.patch
 patch -p1 < libressl-3.1.X.patch
 
 # We modified vendored files here.
