@@ -1,18 +1,18 @@
 All credit goes to E5ten.
 ---
 diff --git a/meson.build b/meson.build
-index 5b488313309..b3e8ffa85f0 100644
+index 703e7fc..a7cc47d 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -1499,7 +1499,7 @@ if host_machine.system() == 'windows'
+@@ -1526,7 +1526,7 @@ if host_machine.system() == 'windows'
      prog_bison = find_program('yacc', 'bison', required : with_any_opengl)
    endif
  else
 -  prog_bison = find_program('bison', required : with_any_opengl)
 +  prog_bison = find_program('bison', 'byacc', required : with_any_opengl)
-   prog_flex = find_program('flex', required : with_any_opengl)
- endif
  
+   # Disable deprecated keyword warnings, since we have to use them for
+   # old-bison compat.  See discussion in
 diff --git a/src/compiler/glsl/glcpp/glcpp-lex.l b/src/compiler/glsl/glcpp/glcpp-lex.l
 index e07739b657c..bb4aee3c948 100644
 --- a/src/compiler/glsl/glcpp/glcpp-lex.l
