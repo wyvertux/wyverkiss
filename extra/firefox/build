@@ -69,11 +69,9 @@ export CXXSTDLIB=c++
     --without-system-libvpx \
     --with-system-jpeg \
     --with-system-zlib \
-    --with-system-bz2 \
     --with-system-png \
     --with-system-pixman \
     --with-system-ffi \
-    --disable-gconf \
     --disable-profiling \
     --disable-accessibility \
     --disable-tests \
@@ -86,7 +84,6 @@ export CXXSTDLIB=c++
     --disable-gold \
     --disable-jemalloc \
     --disable-pulseaudio \
-    --disable-startup-notification \
     --disable-crashreporter \
     --disable-updater \
     --disable-dbus \
