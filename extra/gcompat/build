@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+sed -i 's|/lib|/usr/lib|g' Makefile
+
+gmake LINKER_PATH=/usr/lib/ld-musl-x86_64.so.1
+gmake DESTDIR="$1" install
+
+ln -s ld-linux.so.2 "$1/usr/lib/ld-linux-x86-64.so.2"
+
