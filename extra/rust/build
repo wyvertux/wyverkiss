@@ -6,18 +6,15 @@
 # The bootstrap uses a custom-made rust lib, tailored specifically for
 # Wyverkiss.
 {
-    cache_dir=build/cache/2020-06-04
+    cache_dir=build/cache/2020-05-07
     mkdir -p "$cache_dir"
 
     for tarball in *.tar.xz\?no-extract; do
         mv -f "$tarball" "$cache_dir/${tarball%%\?no-extract}"
     done
-}
 
-# I forgot to enable rpath in our rust 1.44.0 sources. I'm sorry.
-# The next version (1.46.0) should delete this as our 1.45.0 is
-# rpath-enabled.
-export LD_LIBRARY_PATH="$PWD/build/x86_64-unknown-linux-musl/stage0/lib:$LD_LIBRARY_PATH"
+    mv "$cache_dir/cargo-0.44.0-x86_64-unknown-linux-musl-new-libressl.tar.xz" "$cache_dir/cargo-0.44.0-x86_64-unknown-linux-musl.tar.xz"
+}
 
 patch -p1 < llvm-clang.patch
 patch -p1 < libressl-3.1.X.patch
@@ -33,33 +30,29 @@ link-shared = true
 build = "x86_64-unknown-linux-musl"
 host = [ "x86_64-unknown-linux-musl" ]
 target = [ "x86_64-unknown-linux-musl" ]
-docs            = false
-compiler-docs   = false
-extended        = true
-submodules      = false
-python          = "python3"
-locked-deps     = true
-vendor          = true
-sanitizers      = false
-profiler        = false
-full-bootstrap  = false
+docs = false
+extended = true
+submodules = false
+python = "python3"
+locked-deps = true
+vendor = true
 
 [install]
 prefix = "/usr"
 
 [rust]
-channel         = "stable"
-rpath           = false
-codegen-units   = 1
+channel = "stable"
+rpath = false
+codegen-units = 1
 debuginfo-level = 0
-backtrace       = false
-jemalloc        = false
-codegen-tests   = false
-llvm-libunwind  = true
+backtrace = false
+jemalloc = false
+codegen-tests = false
+llvm-libunwind = true
 
 [target.x86_64-unknown-linux-musl]
 llvm-config = "/usr/bin/llvm-config"
-crt-static  = false
+crt-static = false
 EOF
 
 python3 ./x.py build -j "$(nproc)"

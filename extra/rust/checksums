@@ -1,6 +1,6 @@
-c436034db42bc0ea7e7f32816ac6555b70d1f76c834407597966dfaf2ec839d6  rustc-1.45.0-src.tar.xz
-d06a683fba24af20689aef7599cc527037c30e23c1a58ca4c33fca000c50be3d  rust-std-1.44.0-x86_64-unknown-linux-musl.tar.xz?no-extract
-6cbc519419b6c42260cab7af12e5fa3c175fb7c74f2ad51a97155b452219a182  rustc-1.44.0-x86_64-unknown-linux-musl.tar.xz?no-extract
-efdbed219c246ceb0ecd7f2f31aaff5d36509cf4259ea6121ab916897d093de4  cargo-0.45.0-x86_64-unknown-linux-musl.tar.xz?no-extract
-a9ef005d7a83036d2af3d0040b1daadc874f1af287bc02a8fddf8b34682739bc  llvm-clang.patch
+e0386295dd5f2c7842835a509e4c57989eec6c29f989a1c85478b0e06f9d38ea  rustc-1.44.1-src.tar.xz
+509ddd4f7b2c65eecf3d6639d215bf5c05a6906d6364aaf6fbb80bb53c3de547  rust-std-1.43.1-x86_64-unknown-linux-musl.tar.xz?no-extract
+a345b33b75c49131d684903e84ca0c11dc97a38f644cbf5e11d2a170a6c10069  rustc-1.43.1-x86_64-unknown-linux-musl.tar.xz?no-extract
+2beb6b4143dea09a20ffdde3f04b19dde0d72c588f34e2af1a8803dbfb722f6f  cargo-0.44.0-x86_64-unknown-linux-musl-new-libressl.tar.xz?no-extract
+349b9df686fb583febee126318378ed41549da40eb2c772a1413ee2790f4a97b  llvm-clang.patch
 903880513dc61427bfedcd99c9b8a4b8156952b9cc5c486e29e5d5a2a77b484a  libressl-3.1.X.patch
