@@ -11,7 +11,7 @@
     --with-mmap \
     --with-system-zlib
 
-make all-gas
-make DESTDIR="$1" install-gas
+gmake all-gas
+gmake DESTDIR="$1" install-gas
 
 ln -s gas "$1/usr/bin/as"
