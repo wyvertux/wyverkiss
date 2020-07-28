@@ -14,11 +14,6 @@
     done
 }
 
-# I forgot to enable rpath in our rust 1.44.0 sources. I'm sorry.
-# The next version (1.46.0) should delete this as our 1.45.0 is
-# rpath-enabled.
-export LD_LIBRARY_PATH="$PWD/build/x86_64-unknown-linux-musl/stage0/lib:$LD_LIBRARY_PATH"
-
 patch -p1 < llvm-clang.patch
 patch -p1 < libressl-3.1.X.patch
 
