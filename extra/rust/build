@@ -6,50 +6,54 @@
 # The bootstrap uses a custom-made rust lib, tailored specifically for
 # Wyverkiss.
 {
-    cache_dir=build/cache/2020-05-07
+    cache_dir=build/cache/2020-06-04
     mkdir -p "$cache_dir"
 
     for tarball in *.tar.xz\?no-extract; do
         mv -f "$tarball" "$cache_dir/${tarball%%\?no-extract}"
     done
-
-    mv "$cache_dir/cargo-0.44.0-x86_64-unknown-linux-musl-new-libressl.tar.xz" "$cache_dir/cargo-0.44.0-x86_64-unknown-linux-musl.tar.xz"
 }
 
 patch -p1 < llvm-clang.patch
 patch -p1 < libressl-3.1.X.patch
+
+sed -i 's/crt_static_default = true/crt_static_default = false/' src/librustc_target/spec/linux_musl_base.rs
 
 # We modified vendored files here.
 sed -i 's/\("files":{\)[^}]*/\1/' vendor/openssl-sys/.cargo-checksum.json
 
 cat > config.toml <<EOF
 [build]
-build = "x86_64-unknown-linux-musl"
-host = [ "x86_64-unknown-linux-musl" ]
-target = [ "x86_64-unknown-linux-musl" ]
-docs = false
-extended = true
-submodules = false
-python = "python3"
-locked-deps = true
-vendor = true
+build           = "x86_64-unknown-linux-musl"
+host            = [ "x86_64-unknown-linux-musl" ]
+target          = [ "x86_64-unknown-linux-musl" ]
+docs            = false
+compiler-docs   = false
+extended        = true
+submodules      = false
+python          = "python3"
+locked-deps     = true
+vendor          = true
+sanitizers      = false
+profiler        = false
+full-bootstrap  = false
 
 [install]
 prefix = "/usr"
 
 [rust]
-channel = "stable"
-rpath = false
-codegen-units = 1
+channel         = "stable"
+rpath           = false
+codegen-units   = 1
 debuginfo-level = 0
-backtrace = false
-jemalloc = false
-codegen-tests = false
-llvm-libunwind = true
+backtrace       = false
+jemalloc        = false
+codegen-tests   = false
+llvm-libunwind  = true
 
 [target.x86_64-unknown-linux-musl]
 llvm-config = "/usr/bin/llvm-config"
-crt-static = false
+crt-static  = false
 EOF
 
 python3 ./x.py build -j "$(nproc)"
