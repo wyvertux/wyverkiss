@@ -1,3 +1,6 @@
+#!/bin/sh
+
+cat <<EOF
 NOTE: This is a transitional package. It can be removed safely.
 
 We decided to remove wyverkiss_path.sh, so you'll have to re-setup it
@@ -13,3 +16,4 @@ $ git config submodule.repo.ignore all
 
 Otherwise, for every update every single change would be considered
 "dirty", and subsequent 'kiss u' will be much harder.
+EOF
