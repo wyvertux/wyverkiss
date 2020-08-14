@@ -1,0 +1,17 @@
+#!/bin/sh
+
+cat <<EOF
+NOTE: This is a transitional package. It can be removed safely.
+
+We decided to remove wyverkiss_path.sh, so you'll have to re-setup it
+manually. See our installation instructions for more information.
+
+Since KISS' move to submodule model as primary method, Wyverkiss as an
+alternative rootfs will follow suit.
+
+After updating this repo to the latest commit, you can now remove the
+copy of KISS repo since we already include a submodule of KISS repo.
+
+Since we added an option on .gitmodules, you won't have to worry about
+dirtying the repo -- it will be ignored.
+EOF
