@@ -9,11 +9,9 @@ manually. See our installation instructions for more information.
 Since KISS' move to submodule model as primary method, Wyverkiss as an
 alternative rootfs will follow suit.
 
-After updating this repo to the latest commit, please modify git config
-of Wyverkiss repo by cd-ing to your Wyverkiss repo path and type:
+After updating this repo to the latest commit, you can now remove the
+copy of KISS repo since we already include a submodule of KISS repo.
 
-$ git config submodule.repo.ignore all
-
-Otherwise, for every update every single change would be considered
-"dirty", and subsequent 'kiss u' will be much harder.
+Since we added an option on .gitmodules, you won't have to worry about
+dirtying the repo -- it will be ignored.
 EOF
