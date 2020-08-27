@@ -45,7 +45,6 @@ pango
 perl          make
 pixman
 python        make
-python2       make
 rust          make
 zip           make
 zlib
