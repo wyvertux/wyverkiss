@@ -1,9 +1,7 @@
 #!/bin/sh -e
 
-patch -p1 < bmake.patch
-
 ./configure \
     --prefix=/usr
 
-make
-make DESTDIR="$1" install
+gmake
+gmake DESTDIR="$1" install
