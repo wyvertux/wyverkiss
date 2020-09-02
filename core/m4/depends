@@ -1,2 +1,2 @@
-byacc
-flex
+byacc make
+flex  make
