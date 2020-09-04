@@ -5,5 +5,5 @@
     --mandir=/usr/share/man \
     --enable-m4
 
-make
-make DESTDIR="$1" install
+make -B
+make -B DESTDIR="$1" install
