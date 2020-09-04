@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < m4-hand-written-lexer.patch
+
 ./configure \
     --prefix=/usr \
     --mandir=/usr/share/man \
