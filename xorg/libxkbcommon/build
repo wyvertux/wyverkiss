@@ -1,14 +1,1 @@
-#!/bin/sh -e
-
-export DESTDIR="$1"
-
-patch -p1 < byacc.patch
-
-meson \
-    --prefix=/usr \
-    -Denable-docs=false \
-    -Denable-wayland=false \
-    . output
-
-ninja -C output
-ninja -C output install
+../../kiss-repo/xorg/libxkbcommon/build

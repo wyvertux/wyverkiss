@@ -1,2 +1,4 @@
-byacc make
-meson make
+byacc   make
+libxml2
+meson   make
+pkgconf make
