@@ -1,8 +1,0 @@
-cairo
-fontconfig
-freetype-harfbuzz
-fribidi
-glib
-libXft
-libXrender
-meson      make
