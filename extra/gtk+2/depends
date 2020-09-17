@@ -1,0 +1,11 @@
+atk
+fribidi
+gdk-pixbuf
+gmake   make
+libXcomposite
+libXi
+libXinerama
+libepoxy
+pango
+pkgconf make
+python  make
