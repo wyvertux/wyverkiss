@@ -20,7 +20,8 @@
     --enable-libwebp \
     --enable-libdrm \
     --x86asmexe=nasm \
-    --disable-debug
+    --disable-debug \
+    --disable-libxml2
 
 gmake
 gmake DESTDIR="$1" install
