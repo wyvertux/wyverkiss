@@ -1,3 +1,7 @@
+\  /\  /
+ \/  \/yverkiss
+_______________________________________________________________________
+
 Wyverkiss is an alternative rootfs for KISS Linux. If KISS goes GNU, we
 go the opposite.
 
@@ -10,18 +14,28 @@ in Wyverkiss will be upstreamed if possible.
 Ideally, this repository should be almost empty or unneeded at all. But
 that would be highly unrealistic.
 
-Changes:
-- The GCC suite (gcc, libstdc++, libgcc, etc.) will be replaced by the
-  LLVM suite (clang, libc++, compiler-rt, etc.)
-- binutils will be replaced with its LLVM counterpart (except GNU as,
-  which will be packaged separately)
-- bison will be replaced with byacc (patching might be needed for a few
-  packages)
-- gzip will be replaced with pigz
-- GNU make will be replaced with bmake, but the former will be available
-  as it's absolutely needed by some packages. It will use the gmake name.
-- ncurses will be replaced by netbsd-curses, thanks to Sabotage Linux.
 
-NOTE: Wyverkiss might or will NOT be officially supported by KISS Linux.
-      As always, use at your own risk. Support for certain packages
-      might not be guaranteed.
+Changes
+_______________________________________________________________________
+
+- The GCC suite (gcc, libstdc++, libgcc, etc.) are replaced by the LLVM
+  suite (clang, libc++, compiler-rt, etc.)
+- binutils are replaced with its LLVM counterpart (except GNU as,
+  which are packaged separately)
+- byacc replaced bison (patching might be needed for a few packages)
+- pigz replaced gzip (this one's already upstreamed, but we'll keep
+  using the pigz name instead of gzip)
+- bmake replaces GNU make, but the latter are still available as it's
+  absolutely needed by some packages. It uses the gmake name
+- netbsd-curses replaces ncurses as an alternative, thanks to Sabotage
+  Linux
+- elftoolchain is used as a replacement for libelf since KISS uses
+  libelf from elfutils, and elfutils currently can't be compiled with
+  Clang at all
+
+
+Disclaimer
+_______________________________________________________________________
+
+Wyverkiss is not officially supported by KISS Linux.
+Use at your own risk. Support for certain packages are not guaranteed.
