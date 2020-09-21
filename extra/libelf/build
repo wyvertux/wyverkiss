@@ -1,50 +1,35 @@
 #!/bin/sh -e
-#
-# Word splitting (for CFLAGS, CC, etc) is sadly required.
-# shellcheck disable=2086
-#
-# This package used to provide the old 'libelf' library. This had a sane
-# build system and caused us no trouble. There are two issues with the
-# old library, 1. It's been unmaintained for years. 2. The Linux kernel
-# will (soon) no longer be compatible with it.
-#
-# elfutils is not an option (as an alternative) as it needs gcc to build,
-# and we're using clang.
 
-export CFLAGS="-fPIC -O2 $CFLAGS"
-export LDFLAGS="-shared $LDFLAGS"
+patch -p1 < musl-decls.patch
 
-# Patch unneeded in next release.
-patch -p1 < libelf-linux.patch
+# Spoof GNU99 checks for clang purposes
+export ac_cv_c99=yes
 
-# To build the kernel, one needs this patch.
-patch -p1 < gelf_symshndx.patch
+# Clang doesn't understand -Wtrampolines, -Wimplicit-fallthrough=5
+sed -i 's/-Wtrampolines//g' lib/Makefile.in
+sed -i 's/-Wtrampolines//g' libelf/Makefile.in
+sed -i 's/=5//g'            lib/Makefile.in
+sed -i 's/=5//g'            libelf/Makefile.in
 
-# Generate needed header file.
-common/native-elf-format > common/native-elf-format.h
+# Build sometimes forces -Werror.
+export CFLAGS="$CFLAGS -Wno-error"
 
-# Generate needed .c files using m4.
-for file in libelf/*.m4; do
-    ${M4:-m4} -DSRCDIR=libelf "$file" > "${file%%.m4}.c"
-done
+# Disable configure error for missing argp.
+sed -i 's/as_fn_error.*libargp/: "/g' configure
 
-# Create all objects (.o).
-for file in libelf/*.c; do
-    ${CC:-cc} -I./libelf -I./common $CFLAGS $CPPFLAGS -c \
-        -o "${file%%.c}.o" "$file"
-done
+# Don't compile two unrelated C files which require argp.
+sed -i 's/color.*printversion../#/g' lib/Makefile.in
 
-mkdir -p "$1/usr/lib"
+./configure \
+    --prefix=/usr \
+    --disable-symbol-versioning \
+    --disable-debuginfod \
+    --disable-nls
 
-# Create shared library.
-${CC:-cc} $LDFLAGS $CFLAGS -I./libelf -I./common libelf/*.o \
-    -o "$1/usr/lib/libelf.so.1"
+# Skip the default make target and build only what we need.
+gmake -C lib
+gmake -C libelf
+gmake -C libelf DESTDIR="$1" install
 
-# Create static library.
-${AR:-ar} -rc "$1/usr/lib/libelf.a" libelf/*.o
-
-# Install remaining headers/files.
-ln -sf         libelf.so.1             "$1/usr/lib/libelf.so"
-install -Dm644 libelf/libelf.h         "$1/usr/include/libelf.h"
-install -Dm644 libelf/gelf.h           "$1/usr/include/gelf.h"
-install -Dm644 common/elfdefinitions.h "$1/usr/include/elfdefinitions.h"
+mkdir -p "$1/usr/lib/pkgconfig"
+cp -f config/libelf.pc "$1/usr/lib/pkgconfig/libelf.pc"
