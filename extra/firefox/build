@@ -6,6 +6,7 @@ sed -i '/net\/if/d' \
     media/mtransport/third_party/nICEr/src/stun/addrs-netlink.c
 
 patch -p1 < if_indextoname.patch
+patch -p1 < no-gtk2.patch
 
 # autoconf requires GNU m4.
 (
