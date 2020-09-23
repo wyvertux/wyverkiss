@@ -29,9 +29,6 @@ _______________________________________________________________________
   absolutely needed by some packages. It uses the gmake name
 - netbsd-curses replaces ncurses as an alternative, thanks to Sabotage
   Linux
-- elftoolchain is used as a replacement for libelf since KISS uses
-  libelf from elfutils, and elfutils currently can't be compiled with
-  Clang at all
 
 
 Disclaimer
