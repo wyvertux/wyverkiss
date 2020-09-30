@@ -5,7 +5,8 @@ patch -p1 < m4-hand-written-lexer.patch
 ./configure \
     --prefix=/usr \
     --mandir=/usr/share/man \
-    --enable-m4
+    --enable-m4 \
+    --enable-static
 
 make -B
 make -B DESTDIR="$1" install
