@@ -2,6 +2,9 @@
 
 cd bmake
 
+export CFLAGS="$CFLAGS -static"
+export LDFLAGS="$LDFLAGS -static"
+
 ./boot-strap --with-default-sys-path=/usr/share/mk op=build
 INSTALL=install ./boot-strap --prefix=/usr --with-mksrc=/usr/share/mk --install-destdir="$1" op=install
 
