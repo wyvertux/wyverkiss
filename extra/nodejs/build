@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
-# Fix a python3 incompatibility.
-sed -i 's|/ (8|// (8|' tools/gyp/pylib/gyp/generator/ninja.py
+# Fix python3.
+sed -i 's|(3, 8)|(3, 9), (3, 8)|g' configure
 
 cat > no-gcc.patch <<EOF
 --- node-v13.9.0/node.gyp
