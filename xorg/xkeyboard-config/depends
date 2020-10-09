@@ -1,1 +1,5 @@
-../../kiss-repo/xorg/xkeyboard-config/depends
+gmake   make
+libX11  make
+pkgconf make
+python  make
+xkbcomp

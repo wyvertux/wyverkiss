@@ -1,11 +1,8 @@
 #!/bin/sh -e
 
-# Swap to shell script instead of perl script for conversion of rules
-# files. See files/xml2lst.
+# Swap to shell script instead of perl script
+# for conversion of rules files. See files/xml2lst.
 sed -i 's/perl //;s/xml2lst\.pl/xml2lst/' rules/Makefile.in
-
-# Make it work with bmake.
-sed -Ei 's|subst ([^,]*),([^,]*),\$\(([^,)]*)\)|\3:\1%=\2%|' rules/Makefile.in
 
 ./configure \
     --prefix=/usr \
@@ -14,5 +11,5 @@ sed -Ei 's|subst ([^,]*),([^,]*),\$\(([^,)]*)\)|\3:\1%=\2%|' rules/Makefile.in
     --without-xsltproc \
     --disable-nls
 
-make
-make DESTDIR="$1" install
+gmake
+gmake DESTDIR="$1" install
