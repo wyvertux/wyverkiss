@@ -1,5 +1,5 @@
---- rustc-1.41.0-src/src/libunwind/lib.rs
-+++ rustc-1.41.0-src/src/libunwind/lib.rs
+--- rustc-1.47.0-src/library/unwind/src/lib.rs
++++ rustc-1.47.0-src/library/unwind/src/lib.rs
 @@ -21,8 +21,7 @@
  }
  
@@ -10,8 +10,8 @@
  extern "C" {}
  
  #[cfg(target_os = "redox")]
---- rustc-1.41.0-src/src/libunwind/build.rs
-+++ rustc-1.41.0-src/src/libunwind/build.rs
+--- rustc-1.47.0-src/library/unwind/build.rs
++++ rustc-1.47.0-src/library/unwind/build.rs
 @@ -105,15 +105,6 @@
              cfg.file(root.join("src").join(src));
          }
