@@ -8,6 +8,14 @@ sed -i '/net\/if/d' \
 patch -p1 < if_indextoname.patch
 patch -p1 < no-gtk2.patch
 
+# This patch should be removed by Firefox 82.
+patch -p1 < D89473.patch
+
+# We modified vendored files here.
+sed -i 's/\("files":{\)[^}]*/\1/' \
+    third_party/rust/syn/.cargo-checksum.json \
+    third_party/rust/proc-macro2/.cargo-checksum.json
+
 # autoconf requires GNU m4.
 (
     cd m4-1.4.18
