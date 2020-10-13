@@ -42,6 +42,7 @@ meson \
     --buildtype=release \
     -Dplatforms=x11,drm \
     -Ddri-drivers=i915,r100,r200,nouveau \
+    -Dzstd=false \
     . output
 
 ninja -C output
