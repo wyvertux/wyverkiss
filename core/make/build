@@ -2,6 +2,26 @@
 
 cd bmake
 
+sed -i 's/build) op_test/build) /' boot-strap
+
+# TODO: A simple sed should replace this crap.
+patch > no-tests.patch <<'EOF'
+diff --git a/boot-strap-old b/boot-strap
+index 00c86b6..3a22cac 100755
+--- a/boot-strap-old
++++ b/boot-strap
+@@ -441,7 +441,6 @@ op_clean() {
+ }
+ 
+ op_install() {
+-	op_test
+ 	case "$INSTALL_PREFIX,$INSTALL_BIN,$prefix" in
+ 	,$HOST_TARGET/bin,*/$HOST_TARGET)
+ 		INSTALL_PREFIX=`dirname $prefix`
+EOF
+
+patch -p1 < no-tests.patch
+
 export CFLAGS="$CFLAGS -static"
 export LDFLAGS="$LDFLAGS -static"
 
