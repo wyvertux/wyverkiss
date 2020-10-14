@@ -2,9 +2,6 @@
 
 patch -p1 < musl-decls.patch
 
-# Spoof GNU99 checks for clang purposes
-export ac_cv_c99=yes
-
 # Clang doesn't understand -Wtrampolines, -Wimplicit-fallthrough=5
 sed -i 's/-Wtrampolines//g' lib/Makefile.in
 sed -i 's/-Wtrampolines//g' libelf/Makefile.in
@@ -24,7 +21,8 @@ sed -i 's/color.*printversion../#/g' lib/Makefile.in
     --prefix=/usr \
     --disable-symbol-versioning \
     --disable-debuginfod \
-    --disable-nls
+    --disable-nls \
+    ac_cv_c99=yes
 
 # Skip the default make target and build only what we need.
 gmake -C lib
