@@ -103,20 +103,6 @@ index 74cb8973077..7dfd433d78c 100644
    ],
  )
  
-diff --git a/src/intel/tools/meson.build b/src/intel/tools/meson.build
-index 647b77f5054..13d3f7d3e98 100644
---- a/src/intel/tools/meson.build
-+++ b/src/intel/tools/meson.build
-@@ -134,8 +134,7 @@ i965_gram_tab = custom_target(
-    input : 'i965_gram.y',
-    output : ['i965_gram.tab.c', 'i965_gram.tab.h'],
-    command : [
--      prog_bison, '@INPUT@', '--defines=@OUTPUT1@',
--      '--output=@OUTPUT0@'
-+      prog_bison, '-b', '@OUTDIR@/i965_gram', '-d', '@INPUT@'
-    ]
- )
- 
 diff --git a/src/mesa/program/meson.build b/src/mesa/program/meson.build
 index 5f3325ff53c..236e6049d42 100644
 --- a/src/mesa/program/meson.build
