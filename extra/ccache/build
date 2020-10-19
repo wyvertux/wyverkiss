@@ -1,18 +1,27 @@
 #!/bin/sh -e
 
-./configure \
-    --prefix=/usr \
-    --sysconfdir=/etc \
-    --mandir=/usr/share/man \
-    --localstatedir=/var
+export DESTDIR="$1"
+export CFLAGS="$CFLAGS -static"
+export CXXFLAGS="$CXXFLAGS -static"
+export LDFLAGS="$LDFLAGS -lc++ -lc++abi -lunwind -static"
 
-gmake
+cmake -B build \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DENABLE_TESTING=OFF \
+    -DZSTD_LIBRARY=/usr/lib/libzstd.a
 
-install -Dm 755 ccache       "$1/usr/bin/ccache"
-install -Dm 644 doc/ccache.1 "$1/usr/share/man/man1/ccache.1"
+cmake --build   build
+cmake --install build
 
 mkdir -p "$1/usr/lib/ccache/bin"
 
-for link in cc c++ clang clang++ cpp; do
+for link in \
+    cc      \
+    clang   \
+    clang++ \
+    cpp     \
+    c++
+do
     ln -sf /usr/bin/ccache "$1/usr/lib/ccache/bin/$link"
 done
