@@ -1,0 +1,8 @@
+#!/bin/sh -e
+
+MAKE=gmake ./configure \
+    --prefix=/usr \
+    --disable-mpers
+
+gmake
+gmake DESTDIR="$1" install
