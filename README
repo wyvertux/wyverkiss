@@ -1,6 +1,6 @@
 \  /\  /
  \/  \/yverkiss
-_______________________________________________________________________
+________________________________________________________________________
 
 Wyverkiss is an alternative rootfs for KISS Linux. If KISS goes GNU, we
 go the opposite.
@@ -16,23 +16,25 @@ that would be highly unrealistic.
 
 
 Changes
-_______________________________________________________________________
+________________________________________________________________________
 
-- The GCC suite (gcc, libstdc++, libgcc, etc.) are replaced by the LLVM
-  suite (clang, libc++, compiler-rt, etc.)
-- binutils are replaced with its LLVM counterpart (except GNU as,
-  which are packaged separately)
-- byacc replaced bison (patching might be needed for a few packages)
-- pigz replaced gzip (this one's already upstreamed, but we'll keep
-  using the pigz name instead of gzip)
-- bmake replaces GNU make, but the latter are still available as it's
-  absolutely needed by some packages. It uses the gmake name
-- netbsd-curses replaces ncurses as an alternative, thanks to Sabotage
-  Linux
+This table contains a summary of GNU programs replaced by its
+equivalents. However, it is not an exhaustive list, and some GNU
+programs mentioned may still be included in a separate repository, gnu/.
+
+  +------------------+---------------+
+  | Original package |  Replacement  |
+  +------------------+---------------+
+  | GNU gcc/g++      | Clang{,++}    |
+  | GNU libstdc++    | libc++        |
+  | GNU make         | bmake         |
+  | GNU binutils     | LLVM binutils |
+  | GNU bison        | byacc         |
+  +------------------+---------------+
 
 
 Disclaimer
-_______________________________________________________________________
+________________________________________________________________________
 
 Wyverkiss is not officially supported by KISS Linux.
 Use at your own risk. Support for certain packages are not guaranteed.
