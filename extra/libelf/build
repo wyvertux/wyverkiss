@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-patch -p1 < musl-decls.patch
-
 # Clang doesn't understand -Wtrampolines, -Wimplicit-fallthrough=5
 sed -i 's/-Wtrampolines//g' lib/Makefile.in
 sed -i 's/-Wtrampolines//g' libelf/Makefile.in
