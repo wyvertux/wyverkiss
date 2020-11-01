@@ -1,14 +1,22 @@
 #!/bin/sh -e
 
+# Uncomment if using valgrind or similar.
+# :>nostrip
+
 ./configure \
     --prefix=/usr \
-    --syslibdir=/usr/lib
+    --syslibdir=/usr/lib \
+# Uncomment if using valgrind or similar.
+#   --enable-debug
 
 gmake
 gmake DESTDIR="$1" install
 
 mkdir -p "$1/usr/bin"
-ln -s /usr/lib/ld-musl-x86_64.so.1 "$1/usr/bin/ldd"
+ln -s  /usr/lib/ld-musl-x86_64.so.1 "$1/usr/bin/ldd"
+
+# Fix incorrect symlink to libc.so.
+ln -sf libc.so "$1/usr/lib/ld-musl-x86_64.so.1"
 
 # Install BSD compatibility headers.
 install -Dm 755 cdefs.h "$1/usr/include/sys/cdefs.h"
