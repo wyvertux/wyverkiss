@@ -1,15 +1,15 @@
 #!/bin/sh -e
 
-sed -i '/chown/d' bsd.prog.mk
-patch -p1 < Makefile.patch
+sed -i '/chown/d' GNUmakefile
 
 ./configure \
+    --prefix=/usr \
     --enable-static \
     --with-shadow \
     --with-timestamp \
     --without-pam
 
-make
-make DESTDIR="$1" install
+gmake
+gmake DESTDIR="$1" install
 
 install -Dm600 doas.conf "$1/etc/doas.conf"
