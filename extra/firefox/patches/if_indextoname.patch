@@ -1,7 +1,7 @@
-diff --git a/media/mtransport/third_party/nICEr/src/stun/addrs-netlink.c b/media/mtransport/third_party/nICEr/src/stun/addrs-netlink.c
+diff --git a/dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c b/media/transport/webrtc/third_party/nICEr/src/stun/addrs-netlink.c
 index ddecc34..b3a2400 100644
---- a/media/mtransport/third_party/nICEr/src/stun/addrs-netlink.c
-+++ b/media/mtransport/third_party/nICEr/src/stun/addrs-netlink.c
+--- a/dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c
++++ b/dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c
 @@ -72,7 +72,7 @@ static const int kMaxReadSize = 4096;
  
  static void set_ifname(nr_local_addr *addr, struct ifaddrmsg* msg) {
