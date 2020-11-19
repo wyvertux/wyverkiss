@@ -4,20 +4,19 @@ for patch in *.patch; do
     patch -p1 < "$patch"
 done
 
-# CFLAGS cleanup
-# See http://lists.busybox.net/pipermail/busybox/2019-October/087558.html
-sed -i -e 's:-static-libgcc::' Makefile.flags
-sed -i -r -e 's:[[:space:]]?-(Werror|Os|falign-(functions|jumps|loops|labels)=1|finline-limit=0|fomit-frame-pointer)\>::g' Makefile.flags
-sed -i '/^#error Aborting compilation./d' applets/applets.c
-sed -i 's:-Wl,--gc-sections::' Makefile
+# Remove forced gcc/g++ usage so builds work on gcc-less systems.
+sed -i "s#= g[c+][c+]#= ${CC:=cc}#g" Makefile
+sed -i "s#\(\$(CROSS_COMPILE)\)gcc#\1${CC}#g" Makefile
 
-# Build with cc instead of gcc
-sed -i 's:gcc:cc:' Makefile
+# Ensure that busybox's build system is aware that 'cc' may point
+# to clang rather than GCC. This is the case in non-GCC systems.
+case $("$CC" --version) in (*clang*)
+    sed -i "s&\(\$(CC),\)clang&\1${CC}&g" Makefile.flags
+esac
 
 # Build and install regular busybox.
 # This excludes utilities which require 'suid' to function.
-export CFLAGS=
-gmake
+gmake CC="$CC" HOSTCC="$CC"
 gmake CONFIG_PREFIX="$1/usr" install
 
 # Rename the binary temporarily.
@@ -26,7 +25,7 @@ mv "$1/usr/bin/busybox" "$1/usr/bin/busybox-nosuid"
 # Build and install suid busybox.
 # This _only_ includes utlities which require 'suid' to function.
 cp -f .config-suid .config
-gmake
+gmake CC="$CC" HOSTCC="$CC"
 gmake CONFIG_PREFIX="$1/usr" install
 
 # Aptly name the busybox binaries.
@@ -47,7 +46,7 @@ done
 chmod u+s "$1/usr/bin/busybox-suid"
 
 # The acpid command requires that this directory exist
-# and does not automatically create it
+# and does not automatically create it.
 mkdir -p "$1/etc/acpid"
 
 # Install runit services.
