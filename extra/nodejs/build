@@ -3,22 +3,8 @@
 # Fix python3.
 sed -i 's|(3, 8)|(3, 9), (3, 8)|g' configure
 
-cat > no-gcc.patch <<EOF
---- node-v13.9.0/node.gyp
-+++ node-v13.9.0/node.gyp
-@@ -301,9 +301,6 @@
-           '-Wl,-bnoerrmsg',
-         ],
-       }],
--      ['OS == "linux" and llvm_version != "0.0"', {
--        'libraries': ['-latomic'],
--      }],
-     ],
-   },
- 
-EOF
-
-patch -p1 < no-gcc.patch
+# Don't link with libatomic on LLVM systems.
+sed -i "s/\\'libraries\\'\\: \\[\\'-latomic\\'\\],/#/g" node.gyp
 
 CC=cc CXX=c++ ./configure \
     --prefix=/usr \
