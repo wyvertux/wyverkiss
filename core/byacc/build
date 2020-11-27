@@ -2,11 +2,11 @@
 
 ./configure \
     --prefix=/usr \
+    --program-prefix=b \
     --enable-btyacc
 
 make
 make DESTDIR="$1" install
 
-# Also install as byacc
-mv "$1/usr/bin/yacc" "$1/usr/bin/byacc"
+# Also install as yacc
 ln -s byacc "$1/usr/bin/yacc"
