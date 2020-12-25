@@ -6,7 +6,6 @@ sed -i '/net\/if/d' \
     dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c
 
 patch -p1 < if_indextoname.patch
-patch -p1 < no-gtk2.patch
 
 # autoconf requires GNU m4.
 (
@@ -46,9 +45,6 @@ export PATH=$PWD/junk/bin:$PATH
     make install
 )
 
-mkdir -p build
-cd build
-
 # Override ccache.
 export CC="${CC:-/usr/bin/cc}"
 export CXX="${CXX:-/usr/bin/c++}"
@@ -58,46 +54,48 @@ export RUSTFLAGS="$RUSTFLAGS -Cdebuginfo=0"
 export MOZ_DEBUG_FLAGS=-g0
 export MOZ_NOSPAM=1
 export CXXSTDLIB=c++
+export MACH_USE_SYSTEM_PYTHON=1
 
-../configure \
-    --prefix=/usr \
-    --libdir=/usr/lib \
-    --enable-official-branding \
-    --enable-optimize="$CFLAGS -w" \
-    --enable-install-strip \
-    --enable-strip \
-    --enable-rust-simd \
-    --enable-application=browser \
-    --enable-release \
-    --enable-alsa \
-    --without-system-nspr \
-    --without-system-nss \
-    --without-system-libvpx \
-    --with-system-jpeg \
-    --with-system-zlib \
-    --with-system-png \
-    --with-system-pixman \
-    --with-system-ffi \
-    --disable-profiling \
-    --disable-accessibility \
-    --disable-tests \
-    --disable-system-extension-dirs \
-    --disable-parental-controls \
-    --disable-debug-symbols \
-    --disable-callgrind \
-    --disable-vtune \
-    --disable-elf-hack \
-    --disable-gold \
-    --disable-jemalloc \
-    --disable-pulseaudio \
-    --disable-crashreporter \
-    --disable-updater \
-    --disable-dbus \
-    --disable-eme \
-    --disable-necko-wifi
+cat > .mozconfig <<'EOF'
+ac_add_options --prefix=/usr
+ac_add_options --libdir=/usr/lib
+ac_add_options --enable-official-branding
+ac_add_options --enable-optimize="$CFLAGS -w"
+ac_add_options --enable-install-strip
+ac_add_options --enable-strip
+ac_add_options --enable-rust-simd
+ac_add_options --enable-application=browser
+ac_add_options --enable-release
+ac_add_options --enable-alsa
+ac_add_options --without-system-nspr
+ac_add_options --without-system-nss
+ac_add_options --without-system-libvpx
+ac_add_options --with-system-jpeg
+ac_add_options --with-system-zlib
+ac_add_options --with-system-png
+ac_add_options --with-system-pixman
+ac_add_options --with-system-ffi
+ac_add_options --disable-profiling
+ac_add_options --disable-accessibility
+ac_add_options --disable-tests
+ac_add_options --disable-system-extension-dirs
+ac_add_options --disable-parental-controls
+ac_add_options --disable-debug-symbols
+ac_add_options --disable-callgrind
+ac_add_options --disable-vtune
+ac_add_options --disable-elf-hack
+ac_add_options --disable-gold
+ac_add_options --disable-jemalloc
+ac_add_options --disable-pulseaudio
+ac_add_options --disable-crashreporter
+ac_add_options --disable-updater
+ac_add_options --disable-dbus
+ac_add_options --disable-eme
+ac_add_options --disable-necko-wifi
+EOF
 
-gmake
-gmake DESTDIR="$1" install
+./mach build
+DESTDIR="$1" ./mach install
 
 # Remove a lot of unneeded "stuff".
 rm -rf "$1/usr/include"
