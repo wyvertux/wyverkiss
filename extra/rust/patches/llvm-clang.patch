@@ -9,7 +9,7 @@
 +#[link(name = "unwind")]
  extern "C" {}
  
- #[cfg(target_os = "redox")]
+ // When building with crt-static, we get `gcc_eh` from the `libc` crate, since
 --- rustc-1.47.0-src/library/unwind/build.rs
 +++ rustc-1.47.0-src/library/unwind/build.rs
 @@ -105,15 +105,6 @@

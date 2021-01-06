@@ -6,7 +6,7 @@
 # The bootstrap uses a custom-made rust lib, tailored specifically for
 # Wyverkiss.
 {
-    cache_dir=build/cache/2020-10-08
+    cache_dir=build/cache/2020-11-19
     mkdir -p "$cache_dir"
 
     for tarball in *.tar.xz\?no-extract; do
@@ -15,7 +15,7 @@
 }
 
 patch -p1 < llvm-clang.patch
-patch -p1 < libressl-3.1.X.patch
+patch -p1 < libressl.patch
 
 sed -i 's/crt_static_default = true/crt_static_default = false/' compiler/rustc_target/src/spec/linux_musl_base.rs
 
@@ -49,7 +49,7 @@ debuginfo-level = 0
 backtrace       = false
 jemalloc        = false
 codegen-tests   = false
-llvm-libunwind  = true
+llvm-libunwind  = "system"
 
 [target.x86_64-unknown-linux-musl]
 llvm-config = "/usr/bin/llvm-config"
