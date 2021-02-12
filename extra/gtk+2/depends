@@ -1,0 +1,35 @@
+atk
+bzip2
+cairo
+expat
+fontconfig
+freetype-harfbuzz
+fribidi
+gdk-pixbuf
+glib
+gmake   make
+libX11
+libXau
+libXcomposite
+libXcursor
+libXdamage
+libXext
+libXfixes
+libXi
+libXinerama
+libXrandr
+libXrender
+libXxf86vm
+libdrm
+libepoxy
+libffi
+libjpeg-turbo
+libpng
+libxcb
+libxshmfence
+mesa
+pango
+pixman
+pkgconf make
+python  make
+zlib
