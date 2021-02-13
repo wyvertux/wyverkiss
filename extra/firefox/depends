@@ -10,10 +10,9 @@ freetype-harfbuzz
 fribidi
 gdk-pixbuf
 glib
-gmake         make
 gnu-as        make
+gtk+2         make
 gtk+3
-hicolor-icon-theme
 libICE
 libSM
 libX11
@@ -37,14 +36,16 @@ libpng
 libvpx
 libxcb
 libxshmfence
+llvm          make
+m4            make
 mesa
 nasm          make
 nodejs        make
 pango
 perl          make
 pixman
+pkgconf       make
 python        make
 rust          make
-util-linux
 zip           make
 zlib
