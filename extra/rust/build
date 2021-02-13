@@ -6,7 +6,7 @@
 # The bootstrap uses a custom-made rust lib, tailored specifically for
 # Wyverkiss.
 {
-    cache_dir=build/cache/2020-11-19
+    cache_dir=build/cache/2020-12-31
     mkdir -p "$cache_dir"
 
     for tarball in *.tar.xz\?no-extract; do

@@ -1,6 +1,6 @@
-https://static.rust-lang.org/dist/rustc-1.49.0-src.tar.xz
-https://github.com/wyvertux/rust-build/releases/download/1.48.0/rust-std-1.48.0-x86_64-unknown-linux-musl.tar.xz?no-extract
-https://github.com/wyvertux/rust-build/releases/download/1.48.0/rustc-1.48.0-x86_64-unknown-linux-musl.tar.xz?no-extract
-https://github.com/wyvertux/rust-build/releases/download/1.48.0/cargo-1.48.0-x86_64-unknown-linux-musl.tar.xz?no-extract
+https://static.rust-lang.org/dist/rustc-1.50.0-src.tar.xz
+https://github.com/wyvertux/rust-build/releases/download/1.49.0/rust-std-1.49.0-x86_64-unknown-linux-musl.tar.xz?no-extract
+https://github.com/wyvertux/rust-build/releases/download/1.49.0/rustc-1.49.0-x86_64-unknown-linux-musl.tar.xz?no-extract
+https://github.com/wyvertux/rust-build/releases/download/1.49.0/cargo-1.49.0-x86_64-unknown-linux-musl.tar.xz?no-extract
 patches/llvm-clang.patch
 patches/libressl.patch
