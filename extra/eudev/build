@@ -6,11 +6,10 @@
     --sbindir=/usr/bin \
     --bindir=/usr/bin \
     --enable-hwdb \
-    --disable-introspection \
-    --disable-dependency-tracking
+    --disable-introspection
 
-gmake
-gmake DESTDIR="$1" install
+make
+make DESTDIR="$1" install
 
 # Install runit service.
 install -Dm755 udevd.run         "$1/etc/sv/udevd/run"
