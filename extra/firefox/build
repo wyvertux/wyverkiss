@@ -6,7 +6,6 @@ sed -i '/net\/if/d' \
     dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c
 
 patch -p1 < if_indextoname.patch
-patch -p1 < rust-1.50.patch
 
 # autoconf requires GNU m4.
 (
