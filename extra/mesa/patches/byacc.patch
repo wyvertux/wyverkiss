@@ -1,11 +1,11 @@
 All credit goes to E5ten.
 ---
-diff --git a/meson.build b/meson.build
-index 703e7fc..a7cc47d 100644
+diff --git a/meson.build.old b/meson.build
+index 932eb13..b192b51 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -1526,7 +1526,7 @@ if host_machine.system() == 'windows'
-     prog_bison = find_program('yacc', 'bison', required : with_any_opengl)
+@@ -1706,7 +1706,7 @@ if host_machine.system() == 'windows'
+     prog_bison = find_program('bison', 'yacc', required : with_any_opengl)
    endif
  else
 -  prog_bison = find_program('bison', required : with_any_opengl)
