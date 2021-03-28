@@ -55,18 +55,15 @@ crt-static  = false
 EOF
 
 # Apparently. It's possible now. However I *won't* recommend this as the
-# behavior can change anytime soon. Also it's a dirty fix. We can only
+# behavior can change anytime soon. Also it's a dirty hack. We can only
 # hope libunwind and libgcc's unwinding part stays compatible.
-mkdir -p "libgcc"
+mkdir -p libgcc
 ln -s /usr/lib/libunwind.so.1 libgcc/libgcc_s.so.1
 cat > libgcc/libgcc_s.so <<EOF
 INPUT(-lunwind)
 EOF
-
 export LD_LIBRARY_PATH="$PWD/libgcc:$LD_LIBRARY_PATH"
 export LIBRARY_PATH="$PWD/libgcc:$LIBRARY_PATH"
-echo "LIBRARY_PATH: $LIBRARY_PATH"
-echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
 
 python3 ./x.py build -j "$(nproc)"
 DESTDIR="$1" python3 ./x.py install
