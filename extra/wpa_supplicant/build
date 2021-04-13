@@ -14,3 +14,6 @@ cd wpa_supplicant
 
 gmake LIBDIR=/usr/lib BINDIR=/usr/bin DRV_LIBS="$CFLAGS" CC="${CC:-cc}"
 gmake LIBDIR=/usr/lib BINDIR=/usr/bin DESTDIR="$1" install
+
+install -Dm644 -t "$1/usr/share/man/man8" doc/docbook/*.8
+install -Dm644 -t "$1/usr/share/man/man5" doc/docbook/*.5
