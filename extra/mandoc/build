@@ -12,7 +12,7 @@ MANDIR=/usr/share/man
 LIBDIR=/usr/lib
 SBINDIR=/usr/bin
 CC="${CC:-cc}"
-CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS -fcommon"
 LN="ln -sf"
 EOF
 
