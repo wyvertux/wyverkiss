@@ -59,19 +59,6 @@ index 7d7ee0c00ff..4d76260d231 100644
  #include "main/mtypes.h"
  
  static int classify_identifier(struct _mesa_glsl_parse_state *, const char *,
-diff --git a/src/compiler/glsl/glsl_parser.yy b/src/compiler/glsl/glsl_parser.yy
-index 048af1f0857..ff6260094f6 100644
---- a/src/compiler/glsl/glsl_parser.yy
-+++ b/src/compiler/glsl/glsl_parser.yy
-@@ -97,7 +97,7 @@ static bool match_layout_qualifier(const char *s1, const char *s2,
- %lex-param   {struct _mesa_glsl_parse_state *state}
- %parse-param {struct _mesa_glsl_parse_state *state}
- 
--%union {
-+%union YYSTYPE {
-    int n;
-    int64_t n64;
-    float real;
 diff --git a/src/compiler/glsl/glsl_parser_extras.cpp b/src/compiler/glsl/glsl_parser_extras.cpp
 index e9ef5b56d8b..aaf4843638b 100644
 --- a/src/compiler/glsl/glsl_parser_extras.cpp

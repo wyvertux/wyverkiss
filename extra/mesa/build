@@ -43,7 +43,6 @@ meson \
     --localstatedir=/var \
     --buildtype=release \
     -Dplatforms=x11 \
-    -Ddri-drivers=i915,r100,r200,nouveau \
     -Dzstd=false \
     . output
 
