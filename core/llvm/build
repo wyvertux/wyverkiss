@@ -1,11 +1,5 @@
 #!/bin/sh -e
 
-(
-    cd libcxx
-    patch -p1 < ../libcxx-musl_compat.patch
-)
-
-sed -i 's/!defined(_GCC_MAX_ALIGN_T)/& \&\& !defined(__DEFINED_max_align_t)/' libcxx/include/stddef.h
 sed -i 's/set(COMPILER_RT_HAS_SANITIZER_COMMON TRUE)/set(COMPILER_RT_HAS_SANITIZER_COMMON FALSE)/' compiler-rt/cmake/config-ix.cmake
 
 export DESTDIR="$1"
