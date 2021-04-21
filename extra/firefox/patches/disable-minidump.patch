@@ -14,11 +14,9 @@ oxidized_breakpad can be enabled even when --disable-backtrace is set.
 If next version still only enables it for x86_64, it might build/work
 fine for us, see: https://github.com/msirringhaus/minidump_writer_linux/issues/4
 
-diff --git a/Cargo.toml b/Cargo.toml
-index 4076a60577..945f26f638 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
-@@ -13,7 +13,6 @@ members = [
+@@ -11,7 +11,6 @@
    "netwerk/test/http3server",
    "security/manager/ssl/osclientcerts",
    "testing/geckodriver",
@@ -26,19 +24,17 @@ index 4076a60577..945f26f638 100644
    "toolkit/library/gtest/rust",
    "toolkit/library/rust/",
    "toolkit/mozapps/defaultagent/rust",
-@@ -79,7 +78,6 @@ spirv_cross = { git = "https://github.com/kvark/spirv_cross", branch = "wgpu4" }
+@@ -84,7 +83,6 @@
  # failure's backtrace feature might break our builds, see bug 1608157.
  failure = { git = "https://github.com/badboy/failure", rev = "64af847bc5fdcb6d2438bec8a6030812a80519a5" }
  failure_derive = { git = "https://github.com/badboy/failure", rev = "64af847bc5fdcb6d2438bec8a6030812a80519a5" }
--minidump_writer_linux = { git = "https://github.com/msirringhaus/minidump_writer_linux.git", rev = "9191af36343846b2c7ada65b9602b481b717c4d8" }
+-minidump_writer_linux = { git = "https://github.com/msirringhaus/minidump_writer_linux.git", rev = "01c7a0da8d34059f7dae8ab9e7512529ff16347a" }
  
  [patch.crates-io.cranelift-codegen]
  git = "https://github.com/mozilla-spidermonkey/wasmtime"
-diff --git a/toolkit/moz.configure b/toolkit/moz.configure
-index 806576b1ef..43ef8309f1 100644
 --- a/toolkit/moz.configure
 +++ b/toolkit/moz.configure
-@@ -2487,8 +2487,6 @@
+@@ -2515,8 +2515,6 @@
  # ==============================================================
  @depends(target)
  def oxidized_breakpad(target):
