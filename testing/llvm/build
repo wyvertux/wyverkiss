@@ -1,11 +1,5 @@
 #!/bin/sh -e
 
-(
-    cd libcxx
-    patch -p1 < ../libcxx-musl_compat.patch
-)
-
-sed -i 's/!defined(_GCC_MAX_ALIGN_T)/& \&\& !defined(__DEFINED_max_align_t)/' libcxx/include/stddef.h
 sed -i 's/set(COMPILER_RT_HAS_SANITIZER_COMMON TRUE)/set(COMPILER_RT_HAS_SANITIZER_COMMON FALSE)/' compiler-rt/cmake/config-ix.cmake
 
 export DESTDIR="$1"
@@ -24,9 +18,10 @@ cmake -B build \
     -DLLVM_ENABLE_LIBXML2=OFF \
     -DLLVM_ENABLE_LIBEDIT=OFF \
     -DLLVM_HOST_TRIPLE="$(clang -dumpmachine)" \
-    -DLLVM_BUILD_EXAMPLES=OFF \
-    -DLLVM_BUILD_DOCS=OFF \
-    -DLLVM_BUILD_TESTS=OFF \
+    -DLLVM_INCLUDE_BENCHMARKS=OFF \
+    -DLLVM_INCLUDE_EXAMPLES=OFF \
+    -DLLVM_INCLUDE_DOCS=OFF \
+    -DLLVM_INCLUDE_TESTS=OFF \
     -DLLVM_ENABLE_LIBCXX=ON \
     -DLLVM_ENABLE_LLD=ON \
     -DLLVM_INSTALL_BINUTILS_SYMLINKS=ON \

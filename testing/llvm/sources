@@ -5,5 +5,4 @@ https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/libunwind-
 https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/libcxx-12.0.0.src.tar.xz libcxx/
 https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/libcxxabi-12.0.0.src.tar.xz libcxxabi/
 https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/lld-12.0.0.src.tar.xz lld/
-patches/libcxx-musl_compat.patch
 files/c99
