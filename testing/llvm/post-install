@@ -1,0 +1,14 @@
+#!/bin/sh -e
+
+cat <<EOF
+==> In the next release of LLVM (either LLVM 12.0.1, LLVM 12.1.0, or
+    LLVM 13.0.0), libc++abi.so.1.0 will be removed since we're able to
+    link them statically now (ala libstdc++ and libsupc++ I presume).
+    The aforementioned file is still available in a transitional period.
+
+    You will need to rebuild ALL packages that depends on libc++ on
+    runtime after installation of LLVM 12.0.0. To see the packages that
+    depends on libc++ (part of LLVM), run:
+
+    $ kiss revdepends llvm
+EOF
