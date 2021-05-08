@@ -4,7 +4,7 @@
 # bootstrap library to allow for the removal of the internet
 # connection requirement per build.
 {
-    cache_dir=build/cache/2021-02-11
+    cache_dir=build/cache/2021-03-25
     mkdir -p "$cache_dir"
 
     for tarball in *.tar.xz\?no-extract; do
@@ -14,6 +14,7 @@
 
 patch -p1 < llvm-clang.patch
 patch -p1 < libressl.patch
+patch -p1 < crt.patch
 
 sed -i 's/crt_static_default = true/crt_static_default = false/' compiler/rustc_target/src/spec/linux_musl_base.rs
 
