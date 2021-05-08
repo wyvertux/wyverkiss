@@ -3,10 +3,8 @@
 # This package mimics the download process of rust's 'x.py'
 # bootstrap library to allow for the removal of the internet
 # connection requirement per build.
-# The bootstrap uses a custom-made rust lib, tailored specifically for
-# Wyverkiss.
 {
-    cache_dir=build/cache/2021-02-11
+    cache_dir=build/cache/2021-03-25
     mkdir -p "$cache_dir"
 
     for tarball in *.tar.xz\?no-extract; do
@@ -16,6 +14,7 @@
 
 patch -p1 < llvm-clang.patch
 patch -p1 < libressl.patch
+patch -p1 < crt.patch
 
 sed -i 's/crt_static_default = true/crt_static_default = false/' compiler/rustc_target/src/spec/linux_musl_base.rs
 
@@ -55,6 +54,17 @@ llvm-libunwind  = "system"
 llvm-config = "/usr/bin/llvm-config"
 crt-static  = false
 EOF
+
+# Apparently. It's possible now. However I *won't* recommend this as the
+# behavior can change anytime soon. Also it's a dirty hack. We can only
+# hope libunwind and libgcc's unwinding part stays compatible.
+mkdir -p libgcc
+ln -s /usr/lib/libunwind.so.1 libgcc/libgcc_s.so.1
+cat > libgcc/libgcc_s.so <<EOF
+INPUT(-lunwind)
+EOF
+export LD_LIBRARY_PATH="$PWD/libgcc:$LD_LIBRARY_PATH"
+export LIBRARY_PATH="$PWD/libgcc:$LIBRARY_PATH"
 
 python3 ./x.py build -j "$(nproc)"
 DESTDIR="$1" python3 ./x.py install
