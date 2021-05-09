@@ -1,8 +1,7 @@
+Note from Wyverkiss:
 Since commit c7091f5a07fa665344d0ebafae5480f54337ef88, Rust on musl
 included crtbegin.o, crtbeginS.o, crtend.o, and crtendS.o to avoid
-segfaults. This patch, in conjunction with manual copying of
-compiler-rt's crtbegin.o and crtend.o, will provide Clang's
-equivalent.
+segfaults. This patch will force Rust to use Clang's equivalent.
 
 diff --git a/compiler/rustc_target/src/spec/crt_objects.rs.old b/compiler/rustc_target/src/spec/crt_objects.rs
 index 2fc9ab2..0507d1f 100644
