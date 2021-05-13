@@ -34,8 +34,6 @@ sed -i "/pre_args += '-DUSE_ELF_TLS'/d" meson.build
 
 python3 bin/git_sha1_gen.py --output include/git_sha1.h
 
-patch -p1 < byacc.patch
-
 meson \
     --prefix=/usr \
     --sysconfdir=/etc \
