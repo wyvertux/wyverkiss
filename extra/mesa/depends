@@ -1,5 +1,6 @@
+byacc        make
 expat
-flex          make
+flex         make
 libX11
 libXdamage
 libXext
@@ -12,7 +13,9 @@ libxcb
 libxshmfence
 linux-headers make
 llvm
+m4            make
 meson         make
+pkgconf       make
 python        make
 xorgproto
 zlib
