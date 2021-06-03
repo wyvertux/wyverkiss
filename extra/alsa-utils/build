@@ -1,5 +1,9 @@
 #!/bin/sh -e
 
+# Fix a missing include
+sed -i '/<syslog.h>/a #include <linux/limits.h>' alsactl/utils.c
+
+# Makefile fix
 sed -i '/\$(edit)\|\.\(service\|rules\)/d' alsactl/Makefile.in
 sed -i '/\$(edit)\|\.\(service\|rules\)/d' alsaucm/Makefile.in
 
