@@ -7,7 +7,6 @@ sed -i '/net\/if/d' \
 
 patch -p1 < if_indextoname.patch
 patch -p1 < no-gtk2.patch
-patch -p1 < disable-minidump.patch
 
 # autoconf requires GNU m4.
 (
