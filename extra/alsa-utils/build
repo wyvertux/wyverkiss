@@ -1,7 +1,9 @@
 #!/bin/sh -e
 
+patch -p1 < alsactl-fix-nested-iteration.patch
+
 # Fix a missing include
-sed -i '/<syslog.h>/a #include <linux/limits.h>' alsactl/utils.c
+sed -i '/<syslog.h>/a #include <limits.h>' alsactl/utils.c
 
 # Makefile fix
 sed -i '/\$(edit)\|\.\(service\|rules\)/d' alsactl/Makefile.in
