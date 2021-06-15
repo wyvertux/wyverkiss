@@ -1,9 +1,6 @@
 #!/bin/sh -e
 # shellcheck disable=2016
 
-patch -p1 < alsactl-fix-load-state.patch
-patch -p1 < alsactl-fix-nested-iteration.patch
-
 # Fix a missing include
 sed -i '/<syslog.h>/a #include <limits.h>' alsactl/utils.c
 
