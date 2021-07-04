@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
-sed -i '/--no-print-directory/d' Makefile.in
+sed '/--no-print-directory/d' Makefile.in > _
+mv -f _ Makefile.in
 
 ./configure \
     --prefix=/usr \
