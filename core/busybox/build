@@ -5,13 +5,15 @@ for patch in patch/*.patch; do
 done
 
 # Remove forced gcc/g++ usage so builds work on gcc-less systems.
-sed -i "s#= g[c+][c+]#= ${CC:=cc}#g" Makefile
-sed -i "s#\(\$(CROSS_COMPILE)\)gcc#\1${CC}#g" Makefile
+sed -e "s#= g[c+][c+]#= ${CC:=cc}#g" \
+    -e "s#\(\$(CROSS_COMPILE)\)gcc#\1${CC}#g" Makefile > _
+mv -f _ Makefile
 
 # Ensure that busybox's build system is aware that 'cc' may point
 # to clang rather than GCC. This is the case in non-GCC systems.
 case $("$CC" --version) in (*clang*)
-    sed -i "s&\(\$(CC),\)clang&\1${CC}&g" Makefile.flags
+    sed "s&\(\$(CC),\)clang&\1${CC}&g" Makefile.flags > _
+    mv -f _ Makefile.flags
 esac
 
 # Build and install regular busybox.
@@ -50,15 +52,10 @@ chmod u+s "$1/usr/bin/busybox-suid"
 mkdir -p "$1/etc/acpid"
 
 # Install runit services.
-install -Dm755 acpid.run           "$1/etc/sv/acpid/run"
-install -Dm755 crond.run           "$1/etc/sv/crond/run"
-install -Dm755 syslogd.run         "$1/etc/sv/syslogd/run"
-install -Dm755 mdev.run            "$1/etc/sv/mdev/run"
-install -Dm755 ntpd.run            "$1/etc/sv/ntpd/run"
-ln -s /run/runit/supervise.acpid   "$1/etc/sv/acpid/supervise"
-ln -s /run/runit/supervise.crond   "$1/etc/sv/crond/supervise"
-ln -s /run/runit/supervise.syslogd "$1/etc/sv/syslogd/supervise"
-ln -s /run/runit/supervise.mdev    "$1/etc/sv/mdev/supervise"
-ln -s /run/runit/supervise.ntpd    "$1/etc/sv/ntpd/supervise"
+for s in acpid crond syslogd mdev ntpd; do
+    mkdir -p "$1/etc/sv/$s"
+    cp -f "$s.run" "$1/etc/sv/$s/run"
+    ln -sf "/run/runit/supervise.$s" "$1/etc/sv/$s/supervise"
+done
 
-install -Dm644 mdev.conf "$1/etc/mdev.conf"
+cp -f mdev.conf "$1/etc/mdev.conf"
