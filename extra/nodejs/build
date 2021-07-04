@@ -1,10 +1,13 @@
 #!/bin/sh -e
 
 # Fix python3.
-sed -i 's|(3, 8)|(3, 9), (3, 8)|g' configure
+sed 's|(3, 8)|(3, 9), (3, 8)|g' configure > _
+mv -f _ configure
+chmod +x configure
 
 # Don't link with libatomic on LLVM systems.
-sed -i "s/\\'libraries\\'\\: \\[\\'-latomic\\'\\],/#/g" node.gyp
+sed "s/\\'libraries\\'\\: \\[\\'-latomic\\'\\],/#/g" node.gyp > _
+mv -f _ node.gyp
 
 CC=cc CXX=c++ ./configure \
     --prefix=/usr \
