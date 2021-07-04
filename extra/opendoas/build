@@ -1,6 +1,7 @@
 #!/bin/sh -e
 
-sed -i '/chown/d' GNUmakefile
+sed '/chown/d' GNUmakefile > _
+mv -f _ GNUmakefile
 
 ./configure \
     --prefix=/usr \
@@ -12,4 +13,6 @@ sed -i '/chown/d' GNUmakefile
 gmake
 gmake DESTDIR="$1" install
 
-install -Dm600 doas.conf "$1/etc/doas.conf"
+mkdir -p "$1/etc"
+cp -f doas.conf "$1/etc"
+chmod 600 "$1/etc/doas.conf"
