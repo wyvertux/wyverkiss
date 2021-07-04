@@ -2,8 +2,10 @@
 
 cd bmake
 
-sed -i 's/build) op_test/build) /' boot-strap
-sed -i 's/	op_test//' boot-strap
+sed -e 's/build) op_test/build) /' \
+    -e 's/	op_test//' boot-strap > _
+mv -f _ boot-strap
+chmod +x boot-strap
 
 export CFLAGS="$CFLAGS -static"
 export LDFLAGS="$LDFLAGS -static"
@@ -12,5 +14,6 @@ export LDFLAGS="$LDFLAGS -static"
 INSTALL=install ./boot-strap --prefix=/usr --with-mksrc=/usr/share/mk --install-destdir="$1" op=install
 
 rm -rf "$1/usr/share/man/cat1"
-install -Dm644 bmake.1 "$1/usr/share/man/man1/bmake.1"
+mkdir -p "$1/usr/share/man/man1"
+cp bmake.1 "$1/usr/share/man/man1/bmake.1"
 ln -s bmake "$1/usr/bin/make"
