@@ -1,21 +1,22 @@
 #!/bin/sh -e
 
 # Clang doesn't understand -Wtrampolines, -Wimplicit-fallthrough=5
-sed -i 's/-Wtrampolines//g' lib/Makefile.in
-sed -i 's/-Wtrampolines//g' libelf/Makefile.in
-sed -i 's/=5//g'            lib/Makefile.in
-sed -i 's/=5//g'            libelf/Makefile.in
+sed -e 's/-Wtrampolines//g' -e 's/=5//g' lib/Makefile.in > _
+mv -f _ lib/Makefile.in
+sed -e 's/-Wtrampolines//g' -e 's/=5//g' libelf/Makefile.in > _
+mv -f _ libelf/Makefile.in
 
 # Build sometimes forces -Werror.
 export CFLAGS="$CFLAGS -Wno-error"
 
 # Disable configure error for missing argp, fts, and obstack
-sed -i 's/as_fn_error.*argp/: "/g' configure
-sed -i 's/as_fn_error.*fts/: "/g' configure
-sed -i 's/as_fn_error.*obstack/: "/g' configure
+sed 's/as_fn_error.*\(argp\|fts\|obstack\)/: "/g' configure > _
+mv -f _ configure
+chmod +x configure
 
 # Don't compile two unrelated C files which require argp.
-sed -i 's/color.*printversion../#/g' lib/Makefile.in
+sed 's/color.*printversion../#/g' lib/Makefile.in > _
+mv -f _ lib/Makefile.in
 
 ./configure \
     --prefix=/usr \
