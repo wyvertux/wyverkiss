@@ -8,8 +8,4 @@ for libs in curses terminfo panel menu form; do
 done
 
 # ncurses-compatible script
-install -Dm755 ncurses5-config "$1/usr/bin/ncurses5-config"
-
-# These conflicts with busybox
-rm "$1/usr/bin/clear"
-rm "$1/usr/bin/reset"
+cp -f ncurses5-config "$1/usr/bin/ncurses5-config"
