@@ -3,11 +3,14 @@
 export DESTDIR="$1"
 
 # Remove 'atk-bridge' dependency which removes the 'dbus' dependency.
-sed -i '/atkbridge_dep/d;/atk-bridge-2.0/d' meson.build
-sed -i '/atkbridge_dep,/d' gtk/meson.build
+sed '/atkbridge_dep/d;/atk-bridge-2.0/d' meson.build > _
+mv -f _ meson.build
+sed '/atkbridge_dep,/d' gtk/meson.build > _
+mv -f _ gtk/meson.build
 
-sed -i '/<atk-bridge.h>/d;/atk_bridge_adaptor_init/d' \
-    gtk/a11y/gtkaccessibility.c
+sed '/<atk-bridge.h>/d;/atk_bridge_adaptor_init/d' \
+    gtk/a11y/gtkaccessibility.c > _
+mv -f _ gtk/a11y/gtkaccessibility.c
 
 meson \
     --prefix=/usr \
