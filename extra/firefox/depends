@@ -7,7 +7,6 @@ expat
 ffmpeg
 fontconfig
 freetype-harfbuzz
-fribidi
 gdk-pixbuf
 glib
 gnu-as        make
