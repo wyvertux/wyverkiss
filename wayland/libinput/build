@@ -1,0 +1,18 @@
+#!/bin/sh -e
+
+export CFLAGS="$CFLAGS -fPIC"
+export DESTDIR="$1"
+
+meson \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --mandir=/usr/share/man \
+    --libexecdir=/usr/lib \
+    -Ddebug-gui=false \
+    -Ddocumentation=false \
+    -Dtests=false \
+    -Dlibwacom=false \
+    . output
+
+ninja -C output
+ninja -C output install
