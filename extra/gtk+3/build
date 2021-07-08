@@ -16,10 +16,9 @@ meson \
     --prefix=/usr \
     --sysconfdir=/etc \
     --localstatedir=/var \
-    -Dx11_backend=true \
-    -Dxinerama=yes \
+    -Dx11_backend=false \
     -Dprint_backends=auto \
-    -Dwayland_backend=false \
+    -Dwayland_backend=true \
     -Dwin32_backend=false \
     -Dquartz_backend=false \
     -Dcolord=no \

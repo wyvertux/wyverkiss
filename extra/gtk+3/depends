@@ -1,13 +1,13 @@
 atk
+cairo
+fontconfig
+freetype-harfbuzz
 gdk-pixbuf
-libXcomposite
-libXcursor
-libXdamage
-libXext
-libXi
-libXinerama
-libXrandr
+glib
 libepoxy
-meson  make
+libxkbcommon
+meson   make
 pango
-python make
+pkgconf make
+python  make
+wayland
