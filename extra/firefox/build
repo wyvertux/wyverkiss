@@ -12,6 +12,7 @@ mv -f _ "$_f"
 
 patch -p1 < if_indextoname.patch
 patch -p1 < no-gtk2.patch
+patch -p1 < no-x11.patch
 
 # autoconf requires GNU m4.
 (
