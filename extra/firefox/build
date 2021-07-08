@@ -65,6 +65,7 @@ export MACH_USE_SYSTEM_PYTHON=1
 cat > .mozconfig <<'EOF'
 ac_add_options --prefix=/usr
 ac_add_options --libdir=/usr/lib
+ac_add_options --enable-default-toolkit=cairo-gtk3-wayland
 ac_add_options --enable-official-branding
 ac_add_options --enable-optimize="$CFLAGS -w"
 ac_add_options --enable-install-strip
