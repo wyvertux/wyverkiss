@@ -86,6 +86,7 @@ ac_add_options --with-system-ffi
 ac_add_options --disable-profiling
 ac_add_options --disable-accessibility
 ac_add_options --disable-tests
+ac_add_options --disable-webrtc
 ac_add_options --disable-system-extension-dirs
 ac_add_options --disable-parental-controls
 ac_add_options --disable-debug-symbols
