@@ -2,3 +2,4 @@ byacc   make
 meson   make
 pkgconf make
 wayland
+wayland-protocols make
