@@ -1,5 +1,0 @@
-gmake   make
-libX11  make
-pkgconf make
-python  make
-xkbcomp
