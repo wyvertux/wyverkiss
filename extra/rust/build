@@ -13,13 +13,9 @@
 }
 
 patch -p1 < llvm-clang.patch
-patch -p1 < libressl.patch
 patch -p1 < cargo-miri.patch
 
 sed -i 's/crt_static_default = true/crt_static_default = false/' compiler/rustc_target/src/spec/linux_musl_base.rs
-
-# We modified vendored files here.
-sed -i 's/\("files":{\)[^}]*/\1/' vendor/openssl-sys/.cargo-checksum.json
 
 cat > config.toml <<EOF
 [build]

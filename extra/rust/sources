@@ -3,5 +3,4 @@ https://static.rust-lang.org/dist/2021-05-06/rust-std-1.52.0-x86_64-unknown-linu
 https://static.rust-lang.org/dist/2021-05-06/rustc-1.52.0-x86_64-unknown-linux-musl.tar.xz?no-extract
 https://static.rust-lang.org/dist/2021-05-06/cargo-1.52.0-x86_64-unknown-linux-musl.tar.xz?no-extract
 patches/llvm-clang.patch
-patches/libressl.patch
 patches/cargo-miri.patch
