@@ -12,6 +12,7 @@ mv -f _ "$_f"
 
 patch -p1 < if_indextoname.patch
 patch -p1 < no-gtk2.patch
+patch -p1 < no-x11.patch
 
 # autoconf requires GNU m4.
 (
@@ -65,6 +66,7 @@ export MACH_USE_SYSTEM_PYTHON=1
 cat > .mozconfig <<'EOF'
 ac_add_options --prefix=/usr
 ac_add_options --libdir=/usr/lib
+ac_add_options --enable-default-toolkit=cairo-gtk3-wayland
 ac_add_options --enable-official-branding
 ac_add_options --enable-optimize="$CFLAGS -w"
 ac_add_options --enable-install-strip
@@ -84,6 +86,7 @@ ac_add_options --with-system-ffi
 ac_add_options --disable-profiling
 ac_add_options --disable-accessibility
 ac_add_options --disable-tests
+ac_add_options --disable-webrtc
 ac_add_options --disable-system-extension-dirs
 ac_add_options --disable-parental-controls
 ac_add_options --disable-debug-symbols

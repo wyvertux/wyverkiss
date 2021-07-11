@@ -1,0 +1,14 @@
+#!/bin/sh -e
+
+export DESTDIR="$1"
+
+meson \
+    --prefix=/usr \
+    --buildtype=release \
+    -Ddefault_library=both \
+    -Ddocumentation=false \
+    -Ddtd_validation=false \
+    . build
+
+ninja -C build
+ninja -C build install
