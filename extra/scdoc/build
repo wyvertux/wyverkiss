@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+gmake PREFIX=/usr
+gmake DESTDIR="$1" PREFIX=/usr install
