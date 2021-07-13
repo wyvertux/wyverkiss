@@ -39,5 +39,5 @@ for p in \
     resize \
     scrub
 do
-    make -C "$p" "$@" install
+    gmake -C "$p" "$@" install
 done
