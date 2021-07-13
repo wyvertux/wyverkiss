@@ -1,0 +1,7 @@
+fontconfig
+libxkbcommon
+netbsd-curses make
+pkgconf make
+python  make
+wayland
+wayland-protocols make
