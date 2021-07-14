@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < no-x11.patch
+
 # Remove fribidi dependency.
 sed '/fribidi/d' config/system-headers.mozbuild > _
 mv -f _ config/system-headers.mozbuild
@@ -10,13 +12,10 @@ _f=dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c
 sed '/net\/if/d' "$_f" > _
 mv -f _ "$_f"
 
-patch -p1 < if_indextoname.patch
-patch -p1 < no-gtk2.patch
-patch -p1 < no-x11.patch
-
-# autoconf requires GNU m4.
+# Autoconf 2.13 requires GNU m4.
 (
     cd m4-1.4.18
+
     ./configure \
         --prefix="$PWD/../junk"
 
@@ -24,8 +23,7 @@ patch -p1 < no-x11.patch
     make install
 )
 
-export PATH=$PWD/junk/bin:$PATH
-
+export PATH="$PWD/junk/bin:$PATH"
 # Build autoconf 2.13 for Firefox's sole use.
 # See: https://bugzilla.mozilla.org/show_bug.cgi?id=104642
 (
@@ -52,67 +50,76 @@ export PATH=$PWD/junk/bin:$PATH
     make install
 )
 
-# Override ccache.
+# Bypass 'ccache' as it's totally useless when building
+# Firefox and only slows things down.
 export CC="${CC:-/usr/bin/cc}"
 export CXX="${CXX:-/usr/bin/c++}"
 
-export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox"
+export LDFLAGS="$LDFLAGS -Wl,-rpath=/usr/lib/firefox,--enable-new-dtags"
 export RUSTFLAGS="$RUSTFLAGS -Cdebuginfo=0"
+export MACH_USE_SYSTEM_PYTHON=1
 export MOZ_DEBUG_FLAGS=-g0
 export MOZ_NOSPAM=1
 export CXXSTDLIB=c++
-export MACH_USE_SYSTEM_PYTHON=1
 
-cat > .mozconfig <<'EOF'
+cat > .mozconfig << EOF
+ac_add_options --enable-default-toolkit=cairo-gtk3-wayland
 ac_add_options --prefix=/usr
 ac_add_options --libdir=/usr/lib
-ac_add_options --enable-default-toolkit=cairo-gtk3-wayland
-ac_add_options --enable-official-branding
-ac_add_options --enable-optimize="$CFLAGS -w"
-ac_add_options --enable-install-strip
-ac_add_options --enable-strip
-ac_add_options --enable-rust-simd
-ac_add_options --enable-application=browser
-ac_add_options --enable-release
 ac_add_options --enable-alsa
-ac_add_options --without-system-nspr
-ac_add_options --without-system-nss
-ac_add_options --without-system-libvpx
+ac_add_options --enable-strip
+ac_add_options --enable-release
+ac_add_options --enable-rust-simd
+ac_add_options --enable-install-strip
+ac_add_options --enable-official-branding
+ac_add_options --enable-application=browser
+ac_add_options --enable-optimize="${CFLAGS:-} -w"
+ac_add_options --with-system-libvpx
+ac_add_options --with-system-ffi
+ac_add_options --with-system-png
 ac_add_options --with-system-jpeg
 ac_add_options --with-system-zlib
-ac_add_options --with-system-png
 ac_add_options --with-system-pixman
-ac_add_options --with-system-ffi
-ac_add_options --disable-profiling
-ac_add_options --disable-accessibility
-ac_add_options --disable-tests
-ac_add_options --disable-webrtc
-ac_add_options --disable-system-extension-dirs
-ac_add_options --disable-parental-controls
-ac_add_options --disable-debug-symbols
-ac_add_options --disable-callgrind
-ac_add_options --disable-vtune
-ac_add_options --disable-elf-hack
-ac_add_options --disable-gold
-ac_add_options --disable-jemalloc
-ac_add_options --disable-pulseaudio
-ac_add_options --disable-crashreporter
-ac_add_options --disable-updater
-ac_add_options --disable-dbus
+ac_add_options --without-system-nss
+ac_add_options --without-system-nspr
 ac_add_options --disable-eme
+ac_add_options --disable-dbus
+ac_add_options --disable-gold
+ac_add_options --disable-tests
+ac_add_options --disable-vtune
+ac_add_options --disable-updater
+ac_add_options --disable-jemalloc
+ac_add_options --disable-elf-hack
+ac_add_options --disable-callgrind
+ac_add_options --disable-profiling
 ac_add_options --disable-necko-wifi
+ac_add_options --disable-crashreporter
+ac_add_options --disable-pulseaudio
+ac_add_options --disable-accessibility
+ac_add_options --disable-debug
+ac_add_options --disable-debug-symbols
+ac_add_options --disable-parental-controls
+ac_add_options --disable-system-extension-dirs
+EOF
+
+# Currently required for X11-less builds.
+# See: https://bugzilla.mozilla.org/show_bug.cgi?id=1661450
+#      https://bugzilla.mozilla.org/show_bug.cgi?id=1654112
+cat >> .mozconfig <<EOF
+ac_add_options --disable-webrtc
 EOF
 
 ./mach build
 DESTDIR="$1" ./mach install
 
-# Remove a lot of unneeded "stuff".
-rm -rf "$1/usr/include"
-rm -rf "$1/usr/lib/firefox-devel"
-rm -rf "$1/usr/share/idl"
-rm -rf "$1/usr/lib/firefox/gtk2"
-rm -f  "$1/usr/lib/firefox/browser/features/fxmonitor@mozilla.org.xpi"
-rm -f  "$1/usr/lib/firefox/browser/features/screenshots@mozilla.org.xpi"
-rm -f  "$1/usr/lib/firefox/browser/features/webcompat-reporter@mozilla.org.xpi"
-rm -f  "$1/usr/lib/firefox/browser/features/webcompat@mozilla.org.xpi"
-rm -f  "$1/usr/lib/firefox/browser/features/doh-rollout@mozilla.org.xpi"
+# Remove a lot of uneeded "stuff".
+rm -rf \
+    "$1/usr/include" \
+    "$1/usr/lib/firefox-devel" \
+    "$1/usr/share/idl" \
+    "$1/usr/lib/firefox/browser/features/fxmonitor@mozilla.org.xpi" \
+    "$1/usr/lib/firefox/browser/features/screenshots@mozilla.org.xpi" \
+    "$1/usr/lib/firefox/browser/features/webcompat-reporter@mozilla.org.xpi" \
+    "$1/usr/lib/firefox/browser/features/webcompat@mozilla.org.xpi" \
+    "$1/usr/lib/firefox/browser/features/doh-rollout@mozilla.org.xpi"
+
