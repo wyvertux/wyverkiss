@@ -7,6 +7,10 @@ sed -e 's/build) op_test/build) /' \
 mv -f _ boot-strap
 chmod +x boot-strap
 
+# Yeah, I have no idea why bmake do this.
+sed -e 's/-nostdinc//' mk/sys/Linux.mk > _
+mv -f _ mk/sys/Linux.mk
+
 export CFLAGS="$CFLAGS -static"
 export LDFLAGS="$LDFLAGS -static"
 
