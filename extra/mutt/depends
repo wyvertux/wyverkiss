@@ -1,0 +1,4 @@
+gmake make
+netbsd-curses
+openssl
+zlib
