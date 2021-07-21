@@ -57,7 +57,7 @@ Start by declaring two variables.
 
 ```sh
 $ url=https://github.com/wyvertux/wyverkiss/releases/download/2021.7-3
-$ file=kiss-chroot-2021.7-3.tar.xz
+$ file=wyverkiss-2021.7-3-rootfs.tar.xz
 ```
 
 
@@ -87,8 +87,8 @@ self-proclaimed GNU-free KISS flavor.
 
 ```sh
 ## Download the armored ASCII file
-$ curl -fLO "$url/$file.asc"## for GnuPG
-$ curl -fLO "$url/$file.minisig"## for minisign
+$ curl -fLO "$url/$file.asc"        ## for GnuPG
+$ curl -fLO "$url/$file.minisig"    ## for minisign
 
 ## The following step applies only for minisign
 $ minisign -Vm "$file" -P RWRX6BWR+kgO3kLVuWgBezKRR9IdFiXVabcicNlmEU+qKmYeP82ZtFMb
@@ -364,11 +364,12 @@ not done this before, below are a few guides to get you started.
 - https://kernelnewbies.org/KernelBuild
 
 The Linux kernel is not managed by the package manager. The kernel is managed
-manually by the user. (Rationale: @/faq#5.3)
+manually by the user. (Rationale: https://kisslinux.xyz/faq#5.3)
 
-KISS does not support booting using an initramfs (see @/faq#5.2). When
-configuring your kernel ensure that all required file-system, disk controller
-and USB drivers are built with [*] (=y) and not [m] (=m).
+KISS does not support booting using an initramfs (see
+https://kisslinux.xyz/faq#5.2). When configuring your kernel ensure that
+all required file-system, disk controller and USB drivers are built with
+`[*]` (=y) and not `[m]` (=m).
 
 
 TIP: The Wiki contains a basic kernel configuration page.  
@@ -464,7 +465,7 @@ $ cp -R ./path/to/driver /usr/lib/firmware
 
 ### Patch the kernel
 
-As for kernel 5.13, the following patches need to be applied:
+As of kernel 5.13, the following patches need to be applied:
 
 #### Fix `objtool` failing with musl systems
 
@@ -494,8 +495,7 @@ optionally include the firmware in the kernel itself.
 $ gmake LLVM=1 LLVM_IAS=1 YACC=byacc defconfig
 ```
 
-#### Open an interactive menu to edit the generated .config and enable
-     anything extra you may need.
+#### Open an interactive menu to edit the generated .config and enable anything extra you may need.
 
 ```sh
 $ gmake LLVM=1 LLVM_IAS=1 YACC=byacc menuconfig
