@@ -179,9 +179,10 @@ This user's `KISS_PATH` could look like this:
 1 export KISS_PATH=''
 2 KISS_PATH=$KISS_PATH:$HOME/repos/personal/games
 3 KISS_PATH=$KISS_PATH:$HOME/repos/personal/web
-4 KISS_PATH=$KISS_PATH:$HOME/repos/repo/core
-5 KISS_PATH=$KISS_PATH:$HOME/repos/repo/extra
-6 KISS_PATH=$KISS_PATH:$HOME/repos/repo/wayland
+4 KISS_PATH=$KISS_PATH:$HOME/repos/wyverkiss/core
+5 KISS_PATH=$KISS_PATH:$HOME/repos/wyverkiss/extra
+6 KISS_PATH=$KISS_PATH:$HOME/repos/wyverkiss/wayland
+7 KISS_PATH=$KISS_PATH:$HOME/repos/wyverkiss/gnu
 ```
 
 - All repositories are enabled.
