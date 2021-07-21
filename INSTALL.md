@@ -167,13 +167,12 @@ Take this layout:
   |  - web/
 ```
 
-- Repositories are stored in ~/repos/ which is a per-user configuration.
-- There is a git repository called `wyverkiss` containing four `kiss`
-  repositories.
+- Repositories are stored in `~/repos/` which is a per-user configuration.
+- There is a git repository called `wyverkiss` containing four `kiss` repositories.
 - There is a directory called personal, not tracked by git.
 - The personal directory contains two `kiss` repositories.
 
-- This user's `KISS_PATH` could look like this:
+This user's `KISS_PATH` could look like this:
 
 ```sh
 ## This is the contents for ~/.profile, the numbers on the left indicate the line number
@@ -259,20 +258,20 @@ unique to your processor's architecture.
 The `-jX` option should match the number of CPU threads available. You
 can omit this, however builds will then be limited to a single thread.
 
-- CFLAGS/CXXFLAGS  
-
-```sh 
-## NOTE: The 'O' in '-O3' is the letter O and NOT 0 (ZERO). 
-$ export CFLAGS="-O3 -pipe -march=native"  
-$ export CXXFLAGS="$CFLAGS"
-```  
-
-- MAKEFLAGS
+#### `CFLAGS`/`CXXFLAGS`
 
 ```sh
-## NOTE: '4' should be changed to match the number of threads.  
+## NOTE: The 'O' in '-O3' is the letter O and NOT 0 (ZERO).
+$ export CFLAGS="-O3 -pipe -march=native"
+$ export CXXFLAGS="$CFLAGS"
+```
+
+#### `MAKEFLAGS`
+
+```sh
+## NOTE: '4' should be changed to match the number of threads.
 $ export MAKEFLAGS="-j4"
-```  
+```
 
 
 ### Update all base packages to the latest version
@@ -281,7 +280,7 @@ This is how updates are performed on a Wyverkiss system. This command
 uses git to pull down changes from all enabled repositories and will
 then optionally handle the build/install process.
 
-```sh  
+```sh
 $ kiss update
 ```
 
@@ -310,22 +309,22 @@ The software below is required unless stated otherwise.
 
 NOTE: Open an issue for additional filesystem support.
 
-- EXT2, EXT3, EXT4 
+#### EXT2, EXT3, EXT4
 
 ```sh
-$ kiss b e2fsprogs 
+$ kiss b e2fsprogs
 ```
 
-- FAT, VFAT
+#### FAT, VFAT
 
-```sh  
+```sh
 $ kiss b dosfstools
 ```
 
 
 ### WiFi (optional)
 
-```sh  
+```sh
 $ kiss b wpa_supplicant
 ```
 
@@ -339,17 +338,17 @@ $ kiss b dhcpcd
 
 ## The hostname
 
-- Create the /etc/hostname file
+#### Create the /etc/hostname file
 
-```sh 
-$ echo HOSTNAME > /etc/hostname 
+```sh
+$ echo HOSTNAME > /etc/hostname
 ```
 
-- Update the /etc/hosts file
+#### Update the /etc/hosts file
 
 ```
-127.0.0.1  HOSTNAME.localdomain  HOSTNAME 
-::1        HOSTNAME.localdomain  HOSTNAME  ip6-localhost  
+127.0.0.1  HOSTNAME.localdomain  HOSTNAME
+::1        HOSTNAME.localdomain  HOSTNAME  ip6-localhost
 ```
 
 NOTE: This step must be done every time the hostname is changed.
@@ -371,38 +370,38 @@ KISS does not support booting using an initramfs (see @/faq#5.2). When
 configuring your kernel ensure that all required file-system, disk controller
 and USB drivers are built with [*] (=y) and not [m] (=m).
 
-  
+
 TIP: The Wiki contains a basic kernel configuration page.  
-https://kisslinux.xyz/wiki/kernel/config  
+See https://kisslinux.xyz/wiki/kernel/config
 
 
 ### Install required packages
 
-- libelf (required in most if not all cases).  
+#### libelf (required in most if not all cases).
 
 ```sh
 $ kiss b libelf
-```  
+```
 
-- netbsd-curses (required only for `gmake menuconfig`).
+#### netbsd-curses (required only for `gmake menuconfig`).
 
 ```sh
 $ kiss b netbsd-curses
-``
-
-- perl (required in nearly all cases). 
-
-```sh
-$ kiss b perl  
 ```
 
-- GNU make (might be installed already)
+#### perl (required in nearly all cases).
+
+```sh
+$ kiss b perl
+```
+
+#### GNU make (might be installed already)
 
 ```sh
 $ kiss b gmake
 ```
 
-- GNU as (might be required if `LLVM_IAS` fails later)
+#### GNU as (might be required if `LLVM_IAS` fails later)
 
 ```sh
 $ kiss b gnu-as
@@ -425,13 +424,13 @@ A larger list of kernels can be found here:
 - https://wiki.archlinux.org/index.php/Kernel
 
 
-- Download the kernel sources. 
+#### Download the kernel sources.
 
 ```sh
-$ curl -fLO KERNEL_SOURCE  
+$ curl -fLO KERNEL_SOURCE
 ```
 
-- Extract the kernel sources. 
+#### Extract the kernel sources.
 
 ```sh
 $ tar xvf KERNEL_SOURCE
@@ -452,13 +451,13 @@ https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
 - Download and extract the firmware.
 
 ```sh
-$ curl -fLO FIRMWARE_SOURCE.tar.gz 
+$ curl -fLO FIRMWARE_SOURCE.tar.gz
 $ tar xvf FIRMWARE_SOURCE.tar.gz
 ```
 
 - Copy the required drivers to `/usr/lib/firmware`.
 
-```sh  
+```sh
 $ mkdir -p /usr/lib/firmware
 $ cp -R ./path/to/driver /usr/lib/firmware
 ```
@@ -467,14 +466,14 @@ $ cp -R ./path/to/driver /usr/lib/firmware
 
 As for kernel 5.13, the following patches need to be applied:
 
-- Fix `objtool` failing with musl systems
+#### Fix `objtool` failing with musl systems
 
 ```sh
 $ sed 's/$(LIBELF_FLAGS)/$(LIBELF_FLAGS) -D__always_inline=inline/' tools/objtool/Makefile > _
-$ mv -f _ tools/objtool/Makefile  
+$ mv -f _ tools/objtool/Makefile
 ```
 
-- `byacc` support
+#### `byacc` support
 
 ```sh
 $ curl -fLo byacc.patch https://patchwork.kernel.org/project/linux-kbuild/patch/20200130162314.31449-1-e5ten.arch@gmail.com/raw/
@@ -489,29 +488,28 @@ hardware and the Linux kernel. If you require firmware blobs, the
 drivers you enable must be enabled as `[m]` (modules). You can also
 optionally include the firmware in the kernel itself.
 
-- Generate a default config with most drivers built into the kernel.
+#### Generate a default config with most drivers built into the kernel.
 
-```sh  
+```sh
 $ gmake LLVM=1 LLVM_IAS=1 YACC=byacc defconfig
 ```
 
-- Open an interactive menu to edit the generated .config and enable 
-  anything extra you may need. 
+#### Open an interactive menu to edit the generated .config and enable
+     anything extra you may need.
 
-```sh  
+```sh
 $ gmake LLVM=1 LLVM_IAS=1 YACC=byacc menuconfig
 ```
 
+#### Store the generated config for reuse later.
 
-- Store the generated config for reuse later.  
-
-```sh  
+```sh
 $ cp .config /path/to/somewhere
 ```
-  
-TIP: The kernel can backup its own .config file.
-https://kisslinux.xyz/wiki/kernel/config#2.0  
-  
+
+TIP: The kernel can backup its own .config file. See:  
+https://kisslinux.xyz/wiki/kernel/config#2.0
+
 
 ### Build the kernel
 
@@ -526,22 +524,22 @@ $ gmake LLVM=1 LLVM_IAS=1 YACC=byacc
 ### Install the kernel
 
 - Install the built modules (to /usr/lib). (Ignore the GCC errors).
- 
+
 ```sh
-$ gmake INSTALL_MOD_STRIP=1 modules_install 
+$ gmake INSTALL_MOD_STRIP=1 modules_install
 ```
 
 - Install the built kernel (to /boot). (Ignore the LILO error).
-  
+
 ```sh
-$ gmake install 
+$ gmake install
 ```
 
 Rename the kernel/system.map (vmlinuz -> vmlinuz-VERSION).
 
-```sh  
+```sh
 $ mv /boot/vmlinuz/boot/vmlinuz-VERSION
-$ mv /boot/System.map /boot/System.map-VERSION 
+$ mv /boot/System.map /boot/System.map-VERSION
 ```
 
 
@@ -567,22 +565,22 @@ default inittab config.
 
 Source code: https://github.com/kisslinux/init
 
-```sh  
+```sh
 $ kiss b baseinit
 ```
 
 
 ## Change the root password (recommended)
 
-```sh  
-$ passwd root  
+```sh
+$ passwd root
 ```
 
 
 ## Add a normal user (recommended)
 
-```sh  
-$ adduser USERNAME 
+```sh
+$ adduser USERNAME
 ```
 
 
@@ -593,19 +591,18 @@ See:
 - https://kisslinux.xyz/wiki/wayland/install
 - https://kisslinux.xyz/wiki/wayland
 
-#### TIP! 
-  
+#### TIP!
+
 The Wiki is available offline via `kiss help wiki`.
 
 ```sh
 $ kiss help wiki
-  
+
 $ kiss help wiki/wayland
 $ kiss help wiki/wayland/install
-  
-$ kiss help wiki/software  
-$ kiss help wiki/software/firefox  
-  
+
+$ kiss help wiki/software
+$ kiss help wiki/software/firefox
 ```
 
 
@@ -620,5 +617,3 @@ follow, you can use the KISS wiki for that.
 If you encountered any issues or have any questions, get in touch.
 
 See: https://github.com/wyvertux/wyverkiss/issues
-
-
