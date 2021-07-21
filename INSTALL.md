@@ -64,7 +64,7 @@ $ file=wyverkiss-2021.7-3-rootfs.tar.xz
 ### Download the latest release
 
 ```sh
-$ curl -fLO "$url/$file
+$ curl -fLO "$url/$file"
 ```
 
 
@@ -449,14 +449,14 @@ required if your hardware needs firmware.
 https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
 
 
-- Download and extract the firmware.
+#### Download and extract the firmware.
 
 ```sh
 $ curl -fLO FIRMWARE_SOURCE.tar.gz
 $ tar xvf FIRMWARE_SOURCE.tar.gz
 ```
 
-- Copy the required drivers to `/usr/lib/firmware`.
+#### Copy the required drivers to `/usr/lib/firmware`.
 
 ```sh
 $ mkdir -p /usr/lib/firmware
