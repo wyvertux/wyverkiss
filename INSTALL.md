@@ -3,12 +3,12 @@ guidelines. It's been modified to fit Wyverkiss' whole situation.
 
 Welcome to the installation guide for Wyverkiss.
 
-The installation utilizes a tarball which is unpacked to '/'. This same
+The installation utilizes a tarball which is unpacked to `/`. This same
 tarball is also directly usable as a chroot from any Linux distribution.
 
 A live-CD from a another distribution is required to bootstrap
 Wyverkiss. It does not matter which distribution is used so long as it
-includes 'tar', 'xz' and other basic utilities.
+includes `tar`, `xz` and other basic utilities.
 
 The guide assumes you have booted a live-CD, are logged in as root, have
 your disks, partitions and filesystems setup and have an internet
@@ -16,51 +16,39 @@ connection.
 
 ## The Process
 
-- Install Wyverkiss
-- Download the latest release
-- Verify the checksums
-- Verify the signature
-- Unpack the tarball
-- Enter the chroot 
-
-- Setup repositories
-- KISS_PATH
-- Official repositories
-
-- Enable repository signing 
-- Build and install gnupg1
-- Import My Key 
-- Enable Signature Verification
-
-- Rebuild KISS  
-- Modify Compiler Options  
-- Update All Base Packages
-- Rebuild All Packages  
-
-- Userspace tools 
-- Filesystems
-- WiFi
-- Dynamic IP addressing
-
-- The hostname  
-
-- The kernel
-- Install required packages
-- Download the kernel sources
-- Download firmware blobs 
-- Configure the kernel
-- Build the kernel
-- Install the kernel 
-
-- The bootloader 
-- Build and install grub  
-- Setup grub 
-
-- Install init scripts
-- Set a root password 
-- Add a normal user
-- Install graphical session (wayland) 
-- Further steps
+- [Install Wyverkiss](#install-wyverkiss)
+  * [Download the latest release](#download-the-latest-release)
+  * [Verify checksums (recommended)](#verify-checksums--recommended-)
+  * [Verify signature (recommended)](#verify-signature--recommended-)
+  * [Unpack the tarball](#unpack-the-tarball)
+  * [Enter the chroot](#enter-the-chroot)
+- [Setup repositories](#setup-repositories)
+  * [Setting KISS_PATH](#setting-kiss-path)
+  * [Official repositories](#official-repositories)
+  * [Universe](#universe)
+- [Rebuild Wyverkiss](#rebuild-wyverkiss)
+  * [Modify compiler options (optional)](#modify-compiler-options--optional-)
+  * [Update all base packages to the latest version](#update-all-base-packages-to-the-latest-version)
+  * [Rebuild all packages](#rebuild-all-packages)
+- [Userspace tools](#userspace-tools)
+  * [Filesystem utilities](#filesystem-utilities)
+  * [WiFi (optional)](#wifi--optional-)
+  * [Dynamic IP addressing (optional)](#dynamic-ip-addressing--optional-)
+- [The hostname](#the-hostname)
+- [The kernel](#the-kernel)
+  * [Install required packages](#install-required-packages)
+  * [Download the kernel sources and required patches](#download-the-kernel-sources-and-required-patches)
+  * [Download firmware blobs (if required)](#download-firmware-blobs--if-required-)
+  * [Patch the kernel](#patch-the-kernel)
+  * [Configure the kernel](#configure-the-kernel)
+  * [Build the kernel](#build-the-kernel)
+  * [Install the kernel](#install-the-kernel)
+- [The bootloader (UNDER CONSTRUCTION)](#the-bootloader--under-construction-)
+- [Install init scripts](#install-init-scripts)
+- [Change the root password (recommended)](#change-the-root-password--recommended-)
+- [Add a normal user (recommended)](#add-a-normal-user--recommended-)
+  * [Install graphical session (wayland) (optional)](#install-graphical-session--wayland---optional-)
+- [Further steps](#further-steps)
 
 
 ## Install Wyverkiss
@@ -120,8 +108,10 @@ $ gpg --verify "$file.asc"
 This step effectively installs Wyverkiss to /mnt. The tarball contains a
 working system minus the bootloader and kernel.
 
+```sh
 $ cd /mnt
 $ tar xvf "$OLDPWD/$file"
+```
 
 
 ### Enter the chroot
@@ -178,7 +168,7 @@ Take this layout:
 ```
 
 - Repositories are stored in ~/repos/ which is a per-user configuration.
-- There is a git repository called 'wyverkiss' containing four `kiss`
+- There is a git repository called `wyverkiss` containing four `kiss`
   repositories.
 - There is a directory called personal, not tracked by git.
 - The personal directory contains two `kiss` repositories.
@@ -196,10 +186,10 @@ Take this layout:
 ```
 
 - All repositories are enabled.
-- This is a per-user configuration using ~/.profile
+- This is a per-user configuration using `~/.profile`
 - The package manager will search this list in the order it is defined.
 
-TIP: Run '. ~/.profile' for changes to immediately take effect.
+TIP: Run `. ~/.profile` for changes to immediately take effect.
 
 
 ### Official repositories
@@ -214,7 +204,7 @@ Clone the repository to the directory of your choosing.
 $ git clone https://github.com/wyvertux/wyverkiss
 ```
 
-This will be cloned to a directory called 'wyverkiss'. This directory
+This will be cloned to a directory called `wyverkiss`. This directory
 contains multiple KISS repositories (core, extra, testing, wayland, and
 gnu). core, extra, and gnu must be enabled as this guide requires their
 use. Wayland is optional.
@@ -235,13 +225,13 @@ Please note that all of them are probably tested against KISS Linux's
 repo and not Wyverkiss. While you can ask them to support Wyverkiss
 environment, they are under no obligation to adhere to your request.
 
-Repositories should now be setup and in functioning order. Run 'kiss
-search \*' (notice the backslash) to print all repository packages in
+Repositories should now be setup and in functioning order. Run `kiss
+search \*` (notice the backslash) to print all repository packages in
 the search order of the package manager.
 
 #### TIP!
 
-The install guide (and all documentation) is available via 'kiss help'.
+The install guide (and all documentation) is available via `kiss help`.
 
 ```sh
 $ kiss help install
@@ -256,15 +246,15 @@ This step is entirely optional and can also be done post-installation.
 ### Modify compiler options (optional)
 
 These options have been tested and work with every package in the
-repositories. If you'd like to play it safe, use -O2 or -Os instead of
--O3.
+repositories. If you'd like to play it safe, use `-O2` or `-Os` instead
+of `-O3`.
 
 If your system has a low amount of memory, omit -pipe. This option
 speeds up compilation but may use more memory.
 
-If you intend to transfer packages between machines, omit -march=native.
-This option tells the compiler to use optimizations unique to your
-processor's architecture.
+If you intend to transfer packages between machines, omit
+`-march=native`. This option tells the compiler to use optimizations
+unique to your processor's architecture.
 
 The `-jX` option should match the number of CPU threads available. You
 can omit this, however builds will then be limited to a single thread.
@@ -286,7 +276,6 @@ $ export MAKEFLAGS="-j4"
 
 
 ### Update all base packages to the latest version
-
 
 This is how updates are performed on a Wyverkiss system. This command
 uses git to pull down changes from all enabled repositories and will
@@ -312,7 +301,7 @@ $ cd /var/db/kiss/installed && kiss build *
 ## Userspace tools
 
 Each kiss action (build, install, etc) has a shorthand alias. From now
-on, 'kiss b' will be used in place of 'kiss build' and so on.
+on, `kiss b` will be used in place of `kiss build` and so on.
 
 The software below is required unless stated otherwise.
 
@@ -395,7 +384,7 @@ https://kisslinux.xyz/wiki/kernel/config
 $ kiss b libelf
 ```  
 
-- netbsd-curses (required only for 'gmake menuconfig').
+- netbsd-curses (required only for `gmake menuconfig`).
 
 ```sh
 $ kiss b netbsd-curses
@@ -407,7 +396,7 @@ $ kiss b netbsd-curses
 $ kiss b perl  
 ```
 
-- GNU make
+- GNU make (might be installed already)
 
 ```sh
 $ kiss b gmake
@@ -606,7 +595,7 @@ See:
 
 #### TIP! 
   
-The Wiki is available offline via 'kiss help wiki'.
+The Wiki is available offline via `kiss help wiki`.
 
 ```sh
 $ kiss help wiki
