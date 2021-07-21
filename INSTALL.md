@@ -524,13 +524,13 @@ $ gmake LLVM=1 LLVM_IAS=1 YACC=byacc
 
 ### Install the kernel
 
-- Install the built modules (to /usr/lib). (Ignore the GCC errors).
+- Install the built modules (to /usr/lib). (Ignore the GCC error).
 
 ```sh
 $ gmake INSTALL_MOD_STRIP=1 modules_install
 ```
 
-- Install the built kernel (to /boot). (Ignore the LILO error).
+- Install the built kernel (to /boot). (Ignore the GCC *and* LILO error).
 
 ```sh
 $ gmake install
@@ -539,7 +539,7 @@ $ gmake install
 Rename the kernel/system.map (vmlinuz -> vmlinuz-VERSION).
 
 ```sh
-$ mv /boot/vmlinuz/boot/vmlinuz-VERSION
+$ mv /boot/vmlinuz /boot/vmlinuz-VERSION
 $ mv /boot/System.map /boot/System.map-VERSION
 ```
 
