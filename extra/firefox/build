@@ -20,10 +20,11 @@ mv -f _ "$_f"
         --prefix="$PWD/../junk"
 
     make
-    make install
+    make DESTDIR="" install
 )
 
 export PATH="$PWD/junk/bin:$PATH"
+
 # Build autoconf 2.13 for Firefox's sole use.
 # See: https://bugzilla.mozilla.org/show_bug.cgi?id=104642
 (
@@ -34,7 +35,7 @@ export PATH="$PWD/junk/bin:$PATH"
         --program-suffix=-2.13
 
     make
-    make install
+    make DESTDIR="" install
 )
 
 # Build yasm for Firefox's sole use.
@@ -47,7 +48,7 @@ export PATH="$PWD/junk/bin:$PATH"
         --prefix="$PWD/../junk"
 
     make
-    make install
+    make DESTDIR="" install
 )
 
 # Bypass 'ccache' as it's totally useless when building
@@ -110,7 +111,7 @@ ac_add_options --disable-webrtc
 EOF
 
 ./mach build
-DESTDIR="$1" ./mach install
+./mach install
 
 # Remove a lot of uneeded "stuff".
 rm -rf \
