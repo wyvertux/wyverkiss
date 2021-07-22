@@ -1,4 +1,4 @@
-https://busybox.net/downloads/busybox-1.33.1.tar.bz2
+https://git.busybox.net/busybox/snapshot/busybox-1_33_1.tar.gz
 patches/adduser-no-setgid.patch patch
 patches/fix-UB+clang.patch patch
 patches/fsck-resolve-uuid.patch patch
