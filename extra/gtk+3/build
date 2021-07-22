@@ -33,6 +33,14 @@ sed '/<atk-bridge.h>/d;/atk_bridge_adaptor_init/d' \
     gtk/a11y/gtkaccessibility.c > _
 mv -f _ gtk/a11y/gtkaccessibility.c
 
+# Remove fribidi dependency. TODO: Fix the sed mess if possible.
+sed '/fribidi_dep/d;/fribidi_req  /d;s/fribidi_req//;s/fribidi//' meson.build > _
+mv -f _ meson.build
+sed '/fribidi_dep,/d' gtk/meson.build > _
+mv -f _ gtk/meson.build
+sed '/fribidi_dep,/d' gdk/meson.build > _
+mv -f _ gdk/meson.build
+
 meson \
     --prefix=/usr \
     --sysconfdir=/etc \
