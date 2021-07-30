@@ -1,16 +1,18 @@
 #!/bin/sh -e
 
+export DESTDIR="$1"
+
 build_freetype() (
     cd freetype
 
     CFLAGS="$CFLAGS -DDEFAULT_TT_INTERPRETER_VERSION=TT_INTERPRETER_VERSION_40" \
-    ./configure \
+    meson \
         --prefix=/usr \
-        --enable-freetype-config \
-        --with-harfbuzz="$2"
+        -Dharfbuzz="$2" \
+        . output
 
-    gmake
-    gmake DESTDIR="$1" install
+    ninja -C output
+    ninja -C output install
 )
 
 build_harfbuzz() (
@@ -18,7 +20,6 @@ build_harfbuzz() (
     export CFLAGS="$CFLAGS -I$1/usr/include/freetype2"
     export CXXFLAGS="$CXXFLAGS -I$1/usr/include/freetype2"
     export LDFLAGS="$LDFLAGS -L$1/usr/lib"
-    export DESTDIR="$1"
 
     cd harfbuzz
 
@@ -38,11 +39,11 @@ build_harfbuzz() (
     ninja -C output install
 )
 
-build_freetype "$1" no
+build_freetype "$1" disabled
 build_harfbuzz "$1"
 
 # Point Freetype to the Harfbuzz files.
 export HARFBUZZ_CFLAGS="-I$PWD/harfbuzz/src"
 export HARFBUZZ_LIBS="-L$PWD/harfbuzz/output/src -lharfbuzz"
 
-build_freetype "$1" yes
+build_freetype "$1" enabled
