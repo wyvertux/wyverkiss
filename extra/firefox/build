@@ -51,6 +51,21 @@ export PATH="$PWD/junk/bin:$PATH"
     make DESTDIR="" install
 )
 
+# Build zip for Firefox's sole use.
+# Zip is an awful format that we should use
+# as little as possible.
+(
+    cd zip
+
+    make -B \
+        CC="$CC $CFLAGS $CXXFLAGS" \
+        -f unix/Makefile generic
+
+    make -B \
+        prefix="$PWD/../junk" \
+        -f unix/Makefile install
+)
+
 # Bypass 'ccache' as it's totally useless when building
 # Firefox and only slows things down.
 export CC="${CC:-/usr/bin/cc}"
