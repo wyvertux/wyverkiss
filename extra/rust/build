@@ -22,7 +22,7 @@ do
 done
 
 # Ignore checksums of files modified above.
-sed 's/\("files":{\}[^}]*/\1/' \
+sed 's/\("files":{\)[^}]*/\1/' \
     vendor/rustc-ap-rustc_target/.cargo-checksum.json > _
 mv -f _ vendor/rustc-ap-rustc_target/.cargo-checksum.json
 
@@ -63,13 +63,13 @@ EOF
 
 # What a disgusting hack. I really hope someone can find a better way.
 # Otherwise I'll probably submit this to Dylan.
-mkdir -p libgcc
-ln -s /usr/lib/libunwind.so.1 libgcc/libgcc_s.so.1
-cat > libgcc/libgcc_s.so <<EOF
+"$CC" -shared -o build/libgcc_s.so.1 -Wl,--allow-multiple-definition \
+    -Wl,--whole-archive "$($CC -print-libgcc-file-name)" -lunwind
+cat > build/libgcc_s.so <<EOF
 INPUT(-lunwind)
 EOF
-export LD_LIBRARY_PATH="$PWD/libgcc:$LD_LIBRARY_PATH"
-export LIBRARY_PATH="$PWD/libgcc:$LIBRARY_PATH"
+export LD_LIBRARY_PATH="$PWD/build:$LD_LIBRARY_PATH"
+export LIBRARY_PATH="$PWD/build:$LIBRARY_PATH"
 
 python3 ./x.py build -j "$(nproc)"
 DESTDIR="$1" python3 ./x.py install
