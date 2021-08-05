@@ -2,7 +2,7 @@
 
 patch -p1 < no-x11.patch
 
-# Firefox 90 cannot be beuilt with rust 1.54.0. This updates a crate
+# Firefox 90 cannot be built with rust 1.54.0. This updates a crate
 # used by Firefox to work around this issue.
 (
     sed '/const_fn,/d' third_party/rust/packed_simd/src/lib.rs > _
@@ -13,6 +13,14 @@ patch -p1 < no-x11.patch
 
     patch -p1 < rust-1.54.0.patch
 )
+
+# Clang (since 10.0) is able to build NSS with integrated assembler.
+sed '/-no-integrated-as/d' security/nss/lib/freebl/Makefile > _
+mv -f _ security/nss/lib/freebl/Makefile
+sed '/-no-integrated-as/d' security/nss/lib/freebl/freebl.gyp > _
+mv -f _ security/nss/lib/freebl/freebl.gyp
+sed '/-no-integrated-as/d' security/nss/lib/freebl/freebl_base.gypi > _
+mv -f _ security/nss/lib/freebl/freebl_base.gypi
 
 # Remove fribidi dependency.
 sed '/fribidi/d' config/system-headers.mozbuild > _

@@ -9,7 +9,6 @@ fontconfig
 freetype-harfbuzz
 gdk-pixbuf
 glib
-gnu-as        make
 gtk+3
 libdrm
 libepoxy
