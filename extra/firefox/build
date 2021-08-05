@@ -1,8 +1,9 @@
 #!/bin/sh -e
 
+patch -p1 < no-gnu-as.patch
 patch -p1 < no-x11.patch
 
-# Firefox 90 cannot be beuilt with rust 1.54.0. This updates a crate
+# Firefox 90 cannot be built with rust 1.54.0. This updates a crate
 # used by Firefox to work around this issue.
 (
     sed '/const_fn,/d' third_party/rust/packed_simd/src/lib.rs > _
