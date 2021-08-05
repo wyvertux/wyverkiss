@@ -1,0 +1,63 @@
+From 58884e5409f4bb2a58a44f2d0161888dd2c8d872 Mon Sep 17 00:00:00 2001
+From: mssx86 <mss@tutanota.de>
+Date: Thu, 5 Aug 2021 08:48:15 +0300
+Subject: [PATCH] use libunwind instead of libgcc_s.
+
+---
+ library/unwind/build.rs   |  3 +--
+ library/unwind/src/lib.rs | 18 ++----------------
+ 2 files changed, 3 insertions(+), 18 deletions(-)
+
+diff --git a/library/unwind/build.rs b/library/unwind/build.rs
+index 0529d24a2..c9bb6c1b0 100644
+--- a/library/unwind/build.rs
++++ b/library/unwind/build.rs
+@@ -71,7 +71,6 @@ mod llvm_libunwind {
+     /// Compile the libunwind C/C++ source code.
+     pub fn compile() {
+         let target = env::var("TARGET").expect("TARGET was not set");
+-        let target_env = env::var("CARGO_CFG_TARGET_ENV").unwrap();
+         let mut cc_cfg = cc::Build::new();
+         let mut cpp_cfg = cc::Build::new();
+         let root = Path::new("../../src/llvm-project/libunwind");
+@@ -92,7 +91,7 @@ mod llvm_libunwind {
+             cc_cfg.flag("-std=c99");
+         }
+ 
+-        if target.contains("x86_64-fortanix-unknown-sgx") || target_env == "musl" {
++        if target.contains("x86_64-fortanix-unknown-sgx") {
+             // use the same GCC C compiler command to compile C++ code so we do not need to setup the
+             // C++ compiler env variables on the builders.
+             // Don't set this for clang++, as clang++ is able to compile this without libc++.
+diff --git a/library/unwind/src/lib.rs b/library/unwind/src/lib.rs
+index eaeec72fb..968e4b7d4 100644
+--- a/library/unwind/src/lib.rs
++++ b/library/unwind/src/lib.rs
+@@ -37,22 +37,8 @@ cfg_if::cfg_if! {
+ }
+ 
+ #[cfg(target_env = "musl")]
+-cfg_if::cfg_if! {
+-    if #[cfg(all(feature = "llvm-libunwind", feature = "system-llvm-libunwind"))] {
+-        compile_error!("`llvm-libunwind` and `system-llvm-libunwind` cannot be enabled at the same time");
+-    } else if #[cfg(feature = "llvm-libunwind")] {
+-        #[link(name = "unwind", kind = "static")]
+-        extern "C" {}
+-    } else if #[cfg(feature = "system-llvm-libunwind")] {
+-        #[link(name = "unwind", kind = "static-nobundle", cfg(target_feature = "crt-static"))]
+-        #[link(name = "unwind", cfg(not(target_feature = "crt-static")))]
+-        extern "C" {}
+-    } else {
+-        #[link(name = "unwind", kind = "static", cfg(target_feature = "crt-static"))]
+-        #[link(name = "gcc_s", cfg(not(target_feature = "crt-static")))]
+-        extern "C" {}
+-    }
+-}
++#[link(name = "unwind")]
++extern "C" {}
+ 
+ // When building with crt-static, we get `gcc_eh` from the `libc` crate, since
+ // glibc needs it, and needs it listed later on the linker command line. We
+-- 
+2.32.0
+
