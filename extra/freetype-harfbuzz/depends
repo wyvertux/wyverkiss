@@ -1,9 +1,0 @@
-bzip2
-expat
-glib
-libdrm
-libpng
-mesa
-meson make
-pixman
-zlib
