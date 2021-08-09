@@ -4,20 +4,6 @@ export DESTDIR="$1"
 
 patch -p1 < no-fribidi.patch
 
-# GTK+3 on Wayland requires gsettings-desktop-schemes
-# for gsettings to work correctly. Under X11 it made
-# use of xsettings but this is no longer the case.
-(
-    cd schemas
-
-    meson \
-    --prefix=/usr \
-    -Dintrospection=false \
-    . build
-
-    ninja -C build
-    ninja -C build install
-)
 
 # Remove 'atk-bridge' dependency which removes the 'dbus' dependency.
 sed '/atkbridge_dep/d;/atk-bridge-2.0/d' meson.build > _
@@ -36,6 +22,33 @@ sed '/fribidi_dep,/d' gtk/meson.build > _
 mv -f _ gtk/meson.build
 sed '/fribidi_dep,/d' gdk/meson.build > _
 mv -f _ gdk/meson.build
+
+
+# Build libepoxy for gtk+3's sole use. This is the only package that
+# requires the library. While the build system supports building this as
+# a subproject, it is broken so we must do it ourselves.
+(
+    cd libepoxy
+    meson \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --mandir=/usr/share/man \
+        -Ddefault_library=static \
+        -Dhas-dlvsym=false \
+        -Degl=yes \
+        -Dtests=false \
+        -Dglx=no \
+        -Dx11=false \
+        . output
+
+    ninja -C output
+    DESTDIR=$PWD ninja -C output install
+)
+
+# Point gtk+3 to the vendored libepoxy.
+export PKG_CONFIG_PATH=$PWD/libepoxy/usr/lib/pkgconfig
+export CFLAGS="$CFLAGS -L$PWD/libepoxy/usr/lib"
+export CFLAGS="$CFLAGS -I$PWD/libepoxy/usr/include"
 
 meson \
     --prefix=/usr \
@@ -57,8 +70,32 @@ meson \
 
 ninja -C build
 ninja -C build install
+
+
+# GTK+3 on Wayland requires gsettings-desktop-schemes
+# for gsettings to work correctly. Under X11 it made
+# use of xsettings but this is no longer the case.
+(
+    cd schemas
+
+    meson \
+    --prefix=/usr \
+    -Dintrospection=false \
+    . build
+
+    ninja -C build
+    ninja -C build install
+)
+
 # We don't compile with librsvg which leads to this
 # utility solely causing compiler errors for some
 # packages. It has no use at all.
 rm -f  "$1/usr/bin/gtk-encode-symbolic-svg"
 rm -rf "$1/usr/share/gettext"
+
+# Remove epoxy references from installed pkg-config files. The build
+# system should have done this for us as it is statically linked.
+for f in "$1/usr/lib/pkgconfig/"*.pc; do
+    sed 's/epoxy >= 1.4//' "$f" > _
+    mv -f _ "$f"
+done
