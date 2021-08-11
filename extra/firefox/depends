@@ -2,7 +2,7 @@ alsa-lib
 atk
 bzip2
 cairo
-cbindgen      make
+cbindgen          make
 expat
 ffmpeg
 fontconfig
@@ -15,16 +15,17 @@ libffi
 libjpeg-turbo
 libpng
 libvpx
-llvm          make
-m4            make
+llvm              make
+m4                make
 mesa
-nasm          make
-nodejs        make
+nasm              make
+nodejs            make
 pango
-perl          make
+perl              make
 pixman
-pkgconf       make
-python        make
-rust          make
+pkgconf           make
+python            make
+rust              make
 wayland
+wayland-protocols make
 zlib

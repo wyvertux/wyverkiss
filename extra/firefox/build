@@ -2,17 +2,12 @@
 
 patch -p1 < no-x11.patch
 
-# Firefox 90 cannot be built with rust 1.54.0. This updates a crate
-# used by Firefox to work around this issue.
-(
-    sed '/const_fn,/d' third_party/rust/packed_simd/src/lib.rs > _
-    mv -f _ third_party/rust/packed_simd/src/lib.rs
+# X11-less webrtc.
+patch -p1 < attachment.cgi\?id=9202429
 
-    printf '{"package":null,"files":{}}\n' \
-        > third_party/rust/packed_simd/.cargo-checksum.json
+# Fixes the linker not finding if_indextoname
+patch -p1 < webrtc.patch
 
-    patch -p1 < rust-1.54.0.patch
-)
 
 # Clang (since 10.0) is able to build NSS with integrated assembler.
 sed '/-no-integrated-as/d' security/nss/lib/freebl/Makefile > _
@@ -136,13 +131,6 @@ ac_add_options --disable-debug
 ac_add_options --disable-debug-symbols
 ac_add_options --disable-parental-controls
 ac_add_options --disable-system-extension-dirs
-EOF
-
-# Currently required for X11-less builds.
-# See: https://bugzilla.mozilla.org/show_bug.cgi?id=1661450
-#      https://bugzilla.mozilla.org/show_bug.cgi?id=1654112
-cat >> .mozconfig <<EOF
-ac_add_options --disable-webrtc
 EOF
 
 ./mach build
