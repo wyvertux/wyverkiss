@@ -2,30 +2,31 @@
 
 patch -p1 < no-x11.patch
 
-# X11-less webrtc.
+# X11-less webrtc patch from bugzilla. Very large so a URL is used.
 patch -p1 < attachment.cgi\?id=9202429
 
-# Fixes the linker not finding if_indextoname
-patch -p1 < webrtc.patch
-
+# From Void:
+# Firefox is mixing userspace net headers (net/if.h) and kernelspace
+# ones (linux/if.h), leading to redefinitions. We need to include
+# net/if.h before linux/if.h because linux/if.h has redifinition guards
+# whereas net/if.h doesnt.
+f=dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c
+sed '/if defined(LINUX)/a#include <net\/if.h>' "$f" > _
+mv -f _ "$f"
 
 # Clang (since 10.0) is able to build NSS with integrated assembler.
-sed '/-no-integrated-as/d' security/nss/lib/freebl/Makefile > _
-mv -f _ security/nss/lib/freebl/Makefile
-sed '/-no-integrated-as/d' security/nss/lib/freebl/freebl.gyp > _
-mv -f _ security/nss/lib/freebl/freebl.gyp
-sed '/-no-integrated-as/d' security/nss/lib/freebl/freebl_base.gypi > _
-mv -f _ security/nss/lib/freebl/freebl_base.gypi
+for f in \
+    security/nss/lib/freebl/Makefile \
+    security/nss/lib/freebl/freebl.gyp \
+    security/nss/lib/freebl/freebl_base.gypi
+do
+    sed '/-no-integrated-as/d' "$f" > _
+    mv -f _ "$f"
+done
 
 # Remove fribidi dependency.
 sed '/fribidi/d' config/system-headers.mozbuild > _
 mv -f _ config/system-headers.mozbuild
-
-# Remove libc header which conflicts with 7 or so Linux
-# kernel headers. See: https://github.com/kisslinux/repo/issues/207
-_f=dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c
-sed '/net\/if/d' "$_f" > _
-mv -f _ "$_f"
 
 # Autoconf 2.13 requires GNU m4.
 (
@@ -146,4 +147,3 @@ rm -rf \
     "$1/usr/lib/firefox/browser/features/webcompat-reporter@mozilla.org.xpi" \
     "$1/usr/lib/firefox/browser/features/webcompat@mozilla.org.xpi" \
     "$1/usr/lib/firefox/browser/features/doh-rollout@mozilla.org.xpi"
-
