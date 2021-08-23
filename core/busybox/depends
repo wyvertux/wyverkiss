@@ -1,5 +1,2 @@
-bzip2
-gmake make
+gmake         make
 linux-headers make
-openssl make
-pigz
