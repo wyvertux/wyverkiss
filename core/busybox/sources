@@ -1,17 +1,1 @@
-https://git.busybox.net/busybox/snapshot/busybox-MAJOR_MINOR_PATCH.tar.bz2
-patches/adduser-no-setgid.patch patch
-patches/fsck-resolve-uuid.patch patch
-patches/modprobe-kernel-version.patch patch
-patches/print-unicode.patch patch
-patches/install-fix-chown.patch patch
-patches/lsusb-vendor-product.patch patch
-patches/unzip-usage-no-error.patch patch
-patches/fix-UB.patch patch-clang
-files/.config
-files/.config-suid
-files/acpid.run
-files/crond.run
-files/syslogd.run
-files/mdev.run
-files/ntpd.run
-files/mdev.conf
+../../kiss-repo/core/busybox/sources
