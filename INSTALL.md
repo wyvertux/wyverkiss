@@ -409,10 +409,11 @@ $ kiss b gmake
 $ kiss b gnu-as
 ```
 
-TIP: A patch can be applied to remove this requirement.
-- https://kisslinux.xyz/wiki/kernel/config#5.0
-- /usr/share/doc/kiss/wiki/kernel/patches/kernel-no-perl.patch
+TIP: A patch can be applied to remove Perl requirement.
 
+``` sh
+$ patch -p1 < /usr/share/doc/kiss/wiki/kernel/patches/kernel-no-perl.patch
+```
 
 ### Download the kernel sources and required patches
 
