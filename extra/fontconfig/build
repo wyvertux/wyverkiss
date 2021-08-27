@@ -1,19 +1,24 @@
 #!/bin/sh -e
 
+export DESTDIR="$1"
+
 # Make the build system run /bin/true to generate
 # a dummy file so our pre-generated one is used.
-sed 's/fcobjshash\.h/fcjunk.h/' src/Makefile.in > _
-mv -f _ src/Makefile.in
+sed 's/fcobjshash\.h/fcjunk.h/' src/meson.build > _
+mv -f _ src/meson.build
 
-./configure \
-    GPERF=/bin/true \
+# Disable gperf entirely.
+sed "s/find_program(\'gperf\')/find_program(\'true\')/" meson.build > _
+mv -f _ meson.build
+
+meson \
     --prefix=/usr \
     --localstatedir=/var \
     --sysconfdir=/etc \
-    --with-xmldir=/etc/fonts \
-    --enable-static \
-    --disable-docs \
-    --disable-nls
+    -Ddocs=disabled \
+    -Dnls=disabled \
+    -Dtests=disabled \
+    . build
 
-gmake
-gmake DESTDIR="$1" install
+ninja -C build
+ninja -C build install
