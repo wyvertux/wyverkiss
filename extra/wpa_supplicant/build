@@ -3,7 +3,7 @@
 # The wpa_supplicant package is built statically using
 # libnl-tiny which is a minimal version of libnl maintained
 # by OpenWRT.
-gmake CC="${CC:-cc}" ALL_LIBS=libnl-tiny.a -C libnl
+gmake CC="$CC" ALL_LIBS=libnl-tiny.a -C libnl
 
 # The CFLAGS must be set to link to the above locally built
 # libnl-tiny library.
@@ -12,8 +12,8 @@ export CFLAGS="$CFLAGS -static -D_GNU_SOURCE -DLIBNL1_COMPAT"
 
 cd wpa_supplicant
 
-gmake LIBDIR=/usr/lib BINDIR=/usr/bin DRV_LIBS="$CFLAGS" CC="${CC:-cc}"
-gmake LIBDIR=/usr/lib BINDIR=/usr/bin DESTDIR="$1" install
+gmake LIBDIR=/usr/lib BINDIR=/usr/bin DRV_LIBS="$CFLAGS"
+gmake LIBDIR=/usr/lib BINDIR=/usr/bin install
 
 mkdir -p \
     "$1/usr/share/man/man5" \
@@ -21,3 +21,7 @@ mkdir -p \
 
 cp -f doc/docbook/*.5 "$1/usr/share/man/man5"
 cp -f doc/docbook/*.8 "$1/usr/share/man/man8"
+
+# Install runit service.
+mkdir -p "$1/etc/sv/wpa_supplicant"
+cp -f wpa_supplicant.run "$1/etc/sv/wpa_supplicant/run"
