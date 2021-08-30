@@ -2,7 +2,9 @@
 
 export DESTDIR="$1"
 
-patch -p1 < no-fribidi.patch
+for patch in *.patch; do
+    patch -p1 < "$patch"
+done
 
 
 # Remove 'atk-bridge' dependency which removes the 'dbus' dependency.
