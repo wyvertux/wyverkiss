@@ -1,0 +1,33 @@
+#!/bin/sh -e
+
+(
+    cd skalibs
+
+    ./configure \
+        --prefix=/usr \
+        --enable-allstatic
+
+    gmake
+    gmake DESTDIR="$PWD/.." install
+)
+
+./configure \
+    --prefix=/usr \
+    --libdir=/usr/lib \
+    --enable-allstatic \
+    --with-sysdeps="$PWD/usr/lib/skalibs/sysdeps" \
+    --with-lib="$PWD/usr/lib/skalibs" \
+    --with-include="$PWD/usr/include"
+
+gmake
+gmake install
+
+# Install manual pages.
+(
+    cd man
+
+    export MANPATH=$1/usr/share/man
+
+    gmake
+    gmake install
+)
