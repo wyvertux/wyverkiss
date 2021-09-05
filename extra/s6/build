@@ -5,25 +5,28 @@
 
     ./configure \
         --prefix=/usr \
-        --disable-shared
+        --enable-allstatic
 
     gmake
-    gmake DESTDIR="$PWD" install
+    gmake DESTDIR="$PWD/.." install
 )
+
+kiss l execline && _execline=enable
 
 ./configure \
     --prefix=/usr \
-    --libexecdir=lib \
-    --with-sysdeps="$PWD/skalibs/usr/lib/skalibs/sysdeps" \
-    --with-lib="$PWD/skalibs/usr/lib/skalibs" \
-    --with-include="$PWD/skalibs/usr/include" \
-    --enable-static-libc \
-    --disable-shared \
-    --disable-execline
+    --libexecdir=/usr/lib/s6 \
+    --libdir=/usr/lib \
+    --with-sysdeps="$PWD/usr/lib/skalibs/sysdeps" \
+    --with-lib="$PWD/usr/lib/skalibs" \
+    --with-include="$PWD/usr/include" \
+    --enable-allstatic \
+    "--${_execline:-disable}-execline"
 
 gmake
 gmake install
 
+# Install manual pages.
 (
     cd man
 
@@ -42,7 +45,7 @@ gmake install
 
     # Intentional, globbing disabled.
     # shellcheck disable=2086
-    "$CC" -o "$1/usr/bin/init" init.c \
+    "$CC" -static -std=c99 -o "$1/usr/bin/init" init.c \
         -DCONFIG_SERVICE_DIR="\"${CONFIG_SERVICE_DIR:-/var/service}\"" \
         $CFLAGS $CPPFLAGS $LDFLAGS
 
