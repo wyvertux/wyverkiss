@@ -1,0 +1,21 @@
+#!/bin/sh -e
+
+gmake -C xxhash
+
+# Point mold to the local xxhash.
+export CXXFLAGS="-L$PWD/xxhash -I$PWD/xxhash $CXXFLAGS"
+
+# Force a static build so shared library breakage does not also break the
+# linker (and therefore the ability to recover from the issue).
+export LDFLAGS="$LDFLAGS -static"
+
+gmake
+gmake install
+
+# Create a symbolic link so users can use mold as the linker system-wide
+# (without need for special CFLAGS/CXXFLAGS).
+ln -s mold "$1/usr/bin/ld"
+
+# To tell GCC to use mold we must put a symlink to it in a directory and set it
+# to search for the linker within.
+ln -s ../../bin/mold "$1/usr/lib/mold/ld"
