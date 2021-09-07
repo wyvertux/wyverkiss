@@ -1,32 +1,12 @@
 #!/bin/sh -e
 
-patch -p1 < no-x11.patch
+for p in *.patch; do
+    patch -p1 < "$p"
+done
 
 # X11-less webrtc patch from bugzilla. Very large so a URL is used.
 patch -p1 < attachment.cgi\?id=9202429
 
-# From Void:
-# Firefox is mixing userspace net headers (net/if.h) and kernelspace
-# ones (linux/if.h), leading to redefinitions. We need to include
-# net/if.h before linux/if.h because linux/if.h has redifinition guards
-# whereas net/if.h doesnt.
-f=dom/media/webrtc/transport/third_party/nICEr/src/stun/addrs-netlink.c
-sed '/if defined(LINUX)/a#include <net\/if.h>' "$f" > _
-mv -f _ "$f"
-
-# Clang (since 10.0) is able to build NSS with integrated assembler.
-for f in \
-    security/nss/lib/freebl/Makefile \
-    security/nss/lib/freebl/freebl.gyp \
-    security/nss/lib/freebl/freebl_base.gypi
-do
-    sed '/-no-integrated-as/d' "$f" > _
-    mv -f _ "$f"
-done
-
-# Remove fribidi dependency.
-sed '/fribidi/d' config/system-headers.mozbuild > _
-mv -f _ config/system-headers.mozbuild
 
 # Autoconf 2.13 requires GNU m4.
 (
@@ -54,9 +34,8 @@ export PATH="$PWD/junk/bin:$PATH"
     make DESTDIR="" install
 )
 
-# Build yasm for Firefox's sole use.
-# Firefox is the only package which needs it
-# and upstream is kinda dead.
+# Build yasm for Firefox's sole use. Firefox is the only package which
+# needs it and upstream is kinda dead.
 (
     cd yasm
 
@@ -68,10 +47,8 @@ export PATH="$PWD/junk/bin:$PATH"
 )
 
 # Build zip for Firefox's sole use.
-# Zip is an awful format that we should use
-# as little as possible.
-(
-    cd zip
+for f in zip unzip; do (
+    cd "$f"
 
     make -B \
         CC="$CC $CFLAGS $CXXFLAGS" \
@@ -80,7 +57,7 @@ export PATH="$PWD/junk/bin:$PATH"
     make -B \
         prefix="$PWD/../junk" \
         -f unix/Makefile install
-)
+) done
 
 # Bypass 'ccache' as it's totally useless when building
 # Firefox and only slows things down.
