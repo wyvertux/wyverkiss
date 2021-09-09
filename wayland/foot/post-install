@@ -1,0 +1,10 @@
+#!/bin/sh
+cat <<EOF
+Make sure you set your $TERM value to something like:
+
+TERM=linux
+or
+TERM=xterm-256color
+
+Since netbsd-curses doesn't support foot's terminfo.
+EOF
