@@ -1,0 +1,19 @@
+#!/bin/sh -e
+
+cat <<EOF
+==> Since LLVM 12.0.1, libc++abi.so.1.0 has been removed since we're
+    able to link them statically now (ala libstdc++ and libsupc++ I
+    presume).
+
+    You should have rebuilt ALL packages that depend on libc++ on
+    runtime after installation of LLVM 12.0.1, otherwise you may see
+    errors upon executing a binary such as:
+    "Error loading shared library: libc++abi.so.1.0: No such file or
+    directory."
+
+    This notice will be removed in the next major/minor release of LLVM
+    (LLVM 12.1.0 or LLVM 13.0.0).
+
+    To see the packages that depend on libc++ (part of LLVM), run:
+    $ kiss revdepends llvm
+EOF
