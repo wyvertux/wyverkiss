@@ -68,10 +68,13 @@ ln -s clang-cpp "$1/usr/bin/cpp"
 cp -f c99 "$1/usr/bin/c99"
 
 # Clang: Override libexec, the path is hardcoded, unfortunately.
-mv -f "$1/usr/libexec/ccc-analyzer" "$1/usr/lib/clang"
-mv -f "$1/usr/libexec/c++-analyzer" "$1/usr/lib/clang"
+mv -f \
+    "$1/usr/libexec/"*analyze* \
+    "$1/usr/libexec/"*intercept* \
+    "$1/usr/lib/clang"
 
 rmdir "$1/usr/libexec"
 
 sed "s|libexec|lib/clang|" "$1/usr/bin/scan-build" > _
 mv -f _ "$1/usr/bin/scan-build"
+chmod +x "$1/usr/bin/scan-build"
