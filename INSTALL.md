@@ -308,7 +308,8 @@ The software below is required unless stated otherwise.
 
 ### Filesystem utilities
 
-NOTE: Open an issue for additional filesystem support.
+NOTE: Open an issue (in [KISS Linux](https://github.com/kisslinux/repo),
+not Wyverkiss) for additional filesystem support.
 
 #### EXT2, EXT3, EXT4
 
