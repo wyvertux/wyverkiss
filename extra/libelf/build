@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+patch -p1 < musl.patch
+
 # Clang doesn't understand -Wtrampolines, -Wimplicit-fallthrough=5
 sed -e 's/-Wtrampolines//g' -e 's/=5//g' lib/Makefile.in > _
 mv -f _ lib/Makefile.in
