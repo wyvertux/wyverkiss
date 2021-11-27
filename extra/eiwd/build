@@ -1,6 +1,5 @@
 #!/bin/sh -e
 
-patch -p1 < clang.patch
 
 ./configure \
     --prefix=/usr \
@@ -8,8 +7,8 @@ patch -p1 < clang.patch
     --localstatedir=/var \
     --disable-dbus
 
-gmake
-gmake install
+make AM_MAKEFLAGS=
+make AM_MAKEFLAGS= install
 
 cp -f iwd_passphrase "$1/usr/bin"
 
