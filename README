@@ -1,3 +1,23 @@
+Unfortunately, due to my upcoming job and a lot of better solutions for
+GNU-less Linux systems, Wyverkiss is no longer under active development
+for now. You're encouraged to move your installation to other active
+alternatives.
+
+If you want to keep a KISS Linux experience, You can use:
+
+- Glasnost Linux (https://github.com/glasnostlinux/glasnost)
+
+If you don't really care about package manager or minimal experience,
+you can try:
+
+- Chimera Linux (https://chimera-linux.org/)
+- Iglunix (https://github.com/iglunix)
+
+I don't think I'll be able to continue working on Wyverkiss given my
+current situation, but the repo will not be archived, just in case.
+
+------------------------------------------------------------------------
+
 \  /\  /
  \/  \/yverkiss
 ________________________________________________________________________
