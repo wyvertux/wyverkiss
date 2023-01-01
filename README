@@ -1,20 +1,41 @@
-Unfortunately, due to my upcoming job and a lot of better solutions for
-GNU-less Linux systems, Wyverkiss is no longer under active development
-for now. You're encouraged to move your installation to other active
-alternatives.
+Unfortunately, due to lack of interest of maintaining this project (the
+KISS original author disappeared for the second time, I got a day job,
+and I don't really agree with the direction taken by "the new
+management"), Wyverkiss and its associated projects are no longer under
+development of any kind.
 
-If you want to keep a KISS Linux experience, You can use:
+Wyverkiss was originally a realisation of a personal "what-if"
+situation. I've always been fascinated with how an operating system is
+built. I used Gentoo at first, learning about GCC, compiler flags, and
+so on and built an LFS system to manually build everything, and finally,
+after seeing Clang and other alternative compilers which the BSDs use,
+try to see if Clang (at that time, version 3.8) is good enough to build
+almost everything in the Linux land (it wasn't). This fascination
+somewhat waned with me graduating from high school and entering college.
+My interest renewed in 2019, when I had to write my bachelor's thesis.
+A lot of package managers are too complicated or ugly, so when Dylan
+came in with KISS package manager and format, I hopped on since it's
+simple enough and has a pretty good format. The progress in 4 years
+finally saw that the LLVM suite is good enough to be one of the core
+components of a Linux system. Curiosity satisfied, and it's good enough
+for my personal use.
 
-- Glasnost Linux (https://github.com/glasnostlinux/glasnost)
+However, maintaining a whole distribution is a different ballpark, you
+have to keep it updated, build some infrastructure, and if you want to
+make it general-purpose, consider the common and somewhat uncommon use
+cases, and you need to have a good network, which I don't have any.
+Therefore, I decided to abandon this project.
 
-If you don't really care about package manager or minimal experience,
-you can try:
+If you like to see a general-purpose Linux distribution with an
+alternative toolchain (including LLVM, musl, etc.), you can check out
+Chimera Linux [1], I personally regard the author as trustworthy and
+resourceful. and is not overly "militant" to sacrifice practicality. If
+you need a KISS Linux-like experience, you can try Glasnost Linux [2].
 
-- Chimera Linux (https://chimera-linux.org/)
-- Iglunix (https://github.com/iglunix)
+This repository is now archived.
 
-I don't think I'll be able to continue working on Wyverkiss given my
-current situation, but the repo will not be archived, just in case.
+[1] https://chimera-linux.org
+[2] https://www.glasnost.org
 
 ------------------------------------------------------------------------
 
